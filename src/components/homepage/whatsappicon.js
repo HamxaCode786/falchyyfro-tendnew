@@ -23,7 +23,7 @@ const WhatsAppIcon = () => {
         isolation: 'isolate'
       }}>
         <a 
-          href="https://wa.me/+393759119255"  // Use the actual WhatsApp number you want to link
+          href="https://wa.me/+393338000177"  // Use the actual WhatsApp number you want to link
           target="_blank" 
           rel="noopener noreferrer"
           className="whatsapp_icon_link"
