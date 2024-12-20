@@ -12,7 +12,7 @@ const WhatsAppIcon = () => {
         padding: '15px', // Adjust padding to make it look better
         cursor: 'pointer',
         boxShadow: '2px 2px 6px rgba(0,0,0,0.4)',
-        zIndex: 999999, // Ensured z-index is high to stay on top
+        zIndex: 99999999999, // Ensured z-index is high to stay on top
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

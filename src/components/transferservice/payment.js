@@ -157,7 +157,7 @@ const Payment = ({ selectedCard }) => {
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <MDBInput
-            label="Enter Your Contact Information"
+            label="Enter Your Phone Number"
             type="text"
             name="contact"
             value={formData.contact}

@@ -97,7 +97,7 @@ const Conceirge = () => {
         du: "Reserveer uw exclusieve diner- en entertainmentervaring bij ons!",
         fr: "Réservez votre expérience exclusive de restauration et de divertissement avec nous !",
       },
-      image: [image1, Dining1, Dining2, Dining3, Dining4],
+      image: [Dining1, Dining2, Dining3, Dining4],
       description: {
         en: "Experience exquisite culinary delights and world-class entertainment. From exclusive restaurant reservations to private concerts and shows, we curate unforgettable experiences. Our expert concierge team handpicks the finest dining establishments and arranges VIP access to the most sought-after entertainment venues. Whether it's a romantic dinner at a Michelin-starred restaurant or front-row seats at a sold-out performance, we ensure every moment is extraordinary.",
         it: "Vivi prelibatezze culinarie raffinate e intrattenimento di classe mondiale. Dalle prenotazioni in ristoranti esclusivi a concerti e spettacoli privati, creiamo esperienze indimenticabili. Il nostro esperto team di concierge seleziona i migliori ristoranti e organizza l'accesso VIP alle location di intrattenimento più ricercate. Che si tratti di una cena romantica in un ristorante stellato Michelin o di posti in prima fila a uno spettacolo sold-out, ci assicuriamo che ogni momento sia straordinario.",

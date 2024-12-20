@@ -151,7 +151,7 @@ const Contactcard = () => {
               name="phoneNumber" // Keep phoneNumber in the form state
               value={formData.phoneNumber}
               onChange={handleChange}
-              placeholder="Enter your phone number"
+              placeholder="Phone Number"
             />
           </div>
 
