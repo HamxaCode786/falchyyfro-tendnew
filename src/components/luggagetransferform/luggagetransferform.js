@@ -135,6 +135,7 @@ export default function Luggageransferform() {
                     border: "none",
                     color: "black",
                     height: "52px",
+                    width:"100%"
                   }}
                 >
                   <option value="" disabled selected hidden>
@@ -445,6 +446,7 @@ export default function Luggageransferform() {
                       color: "black",
                       borderColor: "white",
                       height: "52px",
+                      width:"100%"
                     }}
                   />
                 </div>
@@ -496,6 +498,7 @@ export default function Luggageransferform() {
                       color: "black",
                       borderColor: "white",
                       height: "52px",
+                      width:"100%"
                     }}
                   />
                 </div>
@@ -556,6 +559,7 @@ export default function Luggageransferform() {
                       color: "black",
                       borderColor: "white",
                       height: "52px",
+                      width:"100%"
                     }}
                   />
                 </div>
@@ -607,6 +611,7 @@ export default function Luggageransferform() {
                       color: "black",
                       borderColor: "white",
                       height: "52px",
+                      width:"100%"
                     }}
                   />
                 </div>
@@ -656,6 +661,7 @@ export default function Luggageransferform() {
                     color: "black",
                     borderColor: "white",
                     height: "52px",
+                    width:"100%"
                   }}
                 />
               </div>

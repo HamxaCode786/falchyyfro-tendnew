@@ -10,6 +10,7 @@ import Travel1 from '../../assets/images/Travel&Accomodation/Four-Seasons-min.pn
 import Travel2 from '../../assets/images/Travel&Accomodation/Grand-Hotel-min.png'
 import Travel3 from '../../assets/images/Travel&Accomodation/Hotel-Galia-min.png'
 import Travel4 from '../../assets/images/Travel&Accomodation/VillaD.png'
+import Travel5 from '../../assets/images/Travel&Accomodation/lastvilla.png'
 import Dining1 from '../../assets/images/Dining&/Armani-hotel-milan-min.png'
 import Dining2 from '../../assets/images/Dining&/Four-Season-Dining-min.png'
 import Dining3 from '../../assets/images/Dining&/Grand-Hotel-min.png'
@@ -357,7 +358,7 @@ const Conceirge = () => {
         du: "Beveilig uw exclusieve professionele diensten bij ons – Op maat gemaakt voor de weinigen die het waarderen",
         fr: "Sécurisez vos services professionnels exclusifs avec nous – Sur mesure pour les connaisseurs exigeants",
       },
-      image: [Travel2, Travel1, Travel2, Travel3, Travel4],
+      image: [Travel2, Travel1, Travel5, Travel3, Travel4],
       description: {
         en: "Access our network of trusted professionals for business support, legal services, translation, and other specialized assistance during your stay. Our vetted experts provide seamless solutions for all your professional needs, from document preparation to business meeting coordination. We connect you with skilled interpreters, legal advisors, and business consultants who understand the nuances of both local and international operations.",
         it: "Accedi alla nostra rete di professionisti affidabili per supporto aziendale, servizi legali, traduzioni e altre assistenze specializzate durante il tuo soggiorno. I nostri esperti selezionati offrono soluzioni senza interruzioni per tutte le tue esigenze professionali, dalla preparazione di documenti alla coordinazione di riunioni aziendali. Ti mettiamo in contatto con interpreti qualificati, consulenti legali e consulenti aziendali che comprendono le sfumature delle operazioni locali e internazionali.",

@@ -1,9 +1,9 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import firstImage from "../../assets/images/caraoselImage/CONCEIRGECARAOUSEL/ConciergeBannerImage (1)-min.png";
-import secondImage from "../../assets/images/caraoselImage/CONCEIRGECARAOUSEL/Group 65-min.png";
-import thirdImage from "../../assets/images/caraoselImage/CONCEIRGECARAOUSEL/Group 66-min.png";
-import fourthImage from "../../assets/images/caraoselImage/CONCEIRGECARAOUSEL/Group 67-min.png";
+import secondImage from "../../assets/images/caraoselImage/CONCEIRGECARAOUSEL/na.png";
+import thirdImage from "../../assets/images/caraoselImage/CONCEIRGECARAOUSEL/nb.png";
+import fourthImage from "../../assets/images/caraoselImage/CONCEIRGECARAOUSEL/nc.png";
 import { TranslationContext } from "../../contextapi/translationContext";
 import { useContext } from "react";
 
