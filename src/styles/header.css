@@ -10,6 +10,8 @@
     /* Card-like bottom border */
     
     /* Shadow effect on the bottom */
+    position: sticky !important;
+    z-index: 9999999999;
     
   }
   

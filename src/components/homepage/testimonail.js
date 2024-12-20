@@ -5,7 +5,7 @@ import BottomRightEclipse from '../../assets/images/homepageimage/Testimonial-Im
 import { TranslationContext } from '../../contextapi/translationContext';
 import { useContext } from "react";
 import { useState } from 'react';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 
 // TestimonialCard Component
@@ -94,13 +94,13 @@ const Testimonial = () => {
   const [index, setIndex] = useState(0);
 
   // Update the displayed testimonials every 30 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex(prevIndex => (prevIndex + 1) % testimonials.length);
-    }, 30000); // 30 seconds
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setIndex(prevIndex => (prevIndex + 1) % testimonials.length);
+  //   }, 30000); // 30 seconds
 
-    return () => clearInterval(interval); // Clean up on component unmount
-  }, []);
+  //   return () => clearInterval(interval); // Clean up on component unmount
+  // }, []);
 
   // Get the last 3 testimonials based on the current index
   const displayedTestimonials = testimonials.slice(index, index + 3);

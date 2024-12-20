@@ -1,7 +1,7 @@
 import React from "react";
-import Class1 from '../../assets/images/rentLuxury/RentLuxuryCars/Mercedes-E-Class-Car.png'
-import Class2 from '../../assets/images/rentLuxury/RentLuxuryCars/Mercedes-V-Class-Car.png'
-import Class3 from '../../assets/images/rentLuxury/RentLuxuryCars/Mercedes-S-Class-Car.png'
+import Class1 from '../../assets/images/rentLuxury/RentLuxuryCars/Car-E-Class2.png'
+import Class2 from '../../assets/images/rentLuxury/RentLuxuryCars/Car-V-Class.png'
+import Class3 from '../../assets/images/rentLuxury/RentLuxuryCars/Car-S-Class.png'
 import { Link } from "react-router-dom";
 import { TranslationContext } from "../../contextapi/translationContext";
 import { SelectedCardContext } from "../../contextapi/rentluxurycontext";

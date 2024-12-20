@@ -6,6 +6,14 @@ import image3 from "../../assets/images/luggagetransferdeposit/Conference1.png";
 import image4 from "../../assets/images/luggagetransferdeposit/ProfessionServic1.png";
 import image5 from "../../assets/images/luggagetransferdeposit/LifeStylee1.png";
 import image6 from "../../assets/images/luggagetransferdeposit/Travel1.png";
+import Travel1 from '../../assets/images/Travel&Accomodation/Four-Seasons-min.png'
+import Travel2 from '../../assets/images/Travel&Accomodation/Grand-Hotel-min.png'
+import Travel3 from '../../assets/images/Travel&Accomodation/Hotel-Galia-min.png'
+import Travel4 from '../../assets/images/Travel&Accomodation/VillaD.png'
+import Dining1 from '../../assets/images/Dining&/Armani-hotel-milan-min.png'
+import Dining2 from '../../assets/images/Dining&/Four-Season-Dining-min.png'
+import Dining3 from '../../assets/images/Dining&/Grand-Hotel-min.png'
+import Dining4 from '../../assets/images/Dining&/Villa-Deste-min.png'
 import { TranslationContext } from "../../contextapi/translationContext";
 import { useContext } from "react";
 
@@ -88,7 +96,7 @@ const Conceirge = () => {
         du: "Reserveer uw exclusieve diner- en entertainmentervaring bij ons!",
         fr: "Réservez votre expérience exclusive de restauration et de divertissement avec nous !",
       },
-      image: [image1, image2, image3, image4],
+      image: [image1, Dining1, Dining2, Dining3, Dining4],
       description: {
         en: "Experience exquisite culinary delights and world-class entertainment. From exclusive restaurant reservations to private concerts and shows, we curate unforgettable experiences. Our expert concierge team handpicks the finest dining establishments and arranges VIP access to the most sought-after entertainment venues. Whether it's a romantic dinner at a Michelin-starred restaurant or front-row seats at a sold-out performance, we ensure every moment is extraordinary.",
         it: "Vivi prelibatezze culinarie raffinate e intrattenimento di classe mondiale. Dalle prenotazioni in ristoranti esclusivi a concerti e spettacoli privati, creiamo esperienze indimenticabili. Il nostro esperto team di concierge seleziona i migliori ristoranti e organizza l'accesso VIP alle location di intrattenimento più ricercate. Che si tratti di una cena romantica in un ristorante stellato Michelin o di posti in prima fila a uno spettacolo sold-out, ci assicuriamo che ogni momento sia straordinario.",
@@ -349,7 +357,7 @@ const Conceirge = () => {
         du: "Beveilig uw exclusieve professionele diensten bij ons – Op maat gemaakt voor de weinigen die het waarderen",
         fr: "Sécurisez vos services professionnels exclusifs avec nous – Sur mesure pour les connaisseurs exigeants",
       },
-      image: [image4, image3, image1, image2],
+      image: [Travel2, Travel1, Travel2, Travel3, Travel4],
       description: {
         en: "Access our network of trusted professionals for business support, legal services, translation, and other specialized assistance during your stay. Our vetted experts provide seamless solutions for all your professional needs, from document preparation to business meeting coordination. We connect you with skilled interpreters, legal advisors, and business consultants who understand the nuances of both local and international operations.",
         it: "Accedi alla nostra rete di professionisti affidabili per supporto aziendale, servizi legali, traduzioni e altre assistenze specializzate durante il tuo soggiorno. I nostri esperti selezionati offrono soluzioni senza interruzioni per tutte le tue esigenze professionali, dalla preparazione di documenti alla coordinazione di riunioni aziendali. Ti mettiamo in contatto con interpreti qualificati, consulenti legali e consulenti aziendali che comprendono le sfumature delle operazioni locali e internazionali.",

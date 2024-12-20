@@ -156,11 +156,12 @@ const Paymentcontact = () => {
   return (
     <div className="payment_form">
   <h2 style={{ textAlign: 'center', marginBottom: '20px', color: 'rgba(27, 27, 27, 0.95)' }}>
-    {language === "en" ? "Your Ride, Your Status – Experience the Thrill of Luxury on the Road With Us!" :
-     language === "it" ? "Il tuo viaggio, il tuo status – Vivi il brivido del lusso sulla strada con noi!" :
-     language === "du" ? "Jouw rit, jouw status – Ervaar de spanning van luxe op de weg met ons!" :
-     language === "fr" ? "Votre trajet, votre statut – Vivez l'excitation du luxe sur la route avec nous !" :
-     "Your Ride, Your Status – Experience the Thrill of Luxury on the Road With Us!"}
+  {language === "en" ? "Experience the Thrill of Luxury on the Road With Us!" :
+     language === "it" ? "Vivi il brivido del lusso sulla strada con noi!" :
+     language === "du" ? "Ervaar de spanning van luxe op de weg met ons!" :
+     language === "fr" ? "Vivez l'excitation du luxe sur la route avec nous !" :
+     "Experience the Thrill of Luxury on the Road With Us!"}
+
   </h2>
   
   <Form onSubmit={handleSubmit}>

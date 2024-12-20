@@ -6,17 +6,19 @@ padding-bottom: 10px;
 font-size: 52px;
 font-weight: 700;
 color: rgba(0, 11, 29, 1);
+display: none;
 
 }
 .transfer_service_heading2 {
 
   
-  font-size: 28px;
+  font-size:32px;
   text-align: center;
   font-weight: 700;
   color: rgba(0, 11, 29, 1);
   padding-right: 10px;
   padding-left: 10px;
+  padding-top: 30px;
   
   }
   

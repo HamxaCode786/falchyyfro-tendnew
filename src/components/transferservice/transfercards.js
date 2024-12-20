@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { TransferContext } from "../../contextapi/transferservicecontext";
-import Drivers from "../../assets/images/transferpage/transfercars/E-Class.png";
-import Driversv from "../../assets/images/transferpage/transfercars/V-Class.png";
-import Driverss from "../../assets/images/transferpage/transfercars/S-class.png";
+import Drivers from "../../assets/images/transferpage/transfercars/Chauffer-E-Class2.png";
+import Driversv from "../../assets/images/transferpage/transfercars/Chauffer-V-Class.png";
+import Driverss from "../../assets/images/transferpage/transfercars/Chauffer-S-Class.png";
 import { TranslationContext } from "../../contextapi/translationContext";
 
 const Transfercards = () => {

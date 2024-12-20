@@ -79,7 +79,7 @@ export default function Luggageransferform() {
   return (
     <div>
       <div className="luggage-section">
-        <h1 className="luggage-heading">
+        {/* <h1 className="luggage-heading">
           {language === "en"
             ? "Book Your Luggage Transfer"
             : language === "it"
@@ -89,7 +89,7 @@ export default function Luggageransferform() {
             : language === "fr"
             ? "Réservez Votre Transfert de Bagages"
             : "Book Your Luggage Transfer"}
-        </h1>
+        </h1> */}
         <h2 className="luggage-heading2">
           {language === "en"
             ? "Your Luggage Transfer—Where Every Journey Begins with Effortless Luxury"

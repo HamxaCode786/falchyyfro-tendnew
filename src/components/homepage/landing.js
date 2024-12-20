@@ -115,6 +115,7 @@ const Landing = () => {
    <div className="image-container">
      <img src={Car} alt="Service" />
    </div> 
+   
   </>
 
   )

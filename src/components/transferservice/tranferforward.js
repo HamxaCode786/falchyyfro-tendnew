@@ -52,7 +52,7 @@ const Tranferforward = () => {
         </ul>
       </div>
 
-      <div className="car_selected_description">
+      {/* <div className="car_selected_description">
         <div className="table_left">
           <h5>Car Make</h5>
           <h5>Car Model</h5>
@@ -71,7 +71,7 @@ const Tranferforward = () => {
         <h5>144 mph</h5>
         <h5>Premium Gasoline</h5>
         </div>
-      </div>
+      </div> */}
       <div className="payment_div">
       <Payment selectedCard={selectedCard} />
       </div>

@@ -50,9 +50,9 @@ const Customcars = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className='modal_background' >
-        <MDBInput label="Example label" id="form12" type="text" className="mb-4" />
-        <MDBInput label="Example label" id="form12" type="text" className="mb-4" />
-        <MDBInput label="Example label" id="form12" type="text" className="mb-4" />
+        <MDBInput label="Make & Model" id="form12" type="text" className="mb-4" />
+        <MDBInput label="Exterior Specifications" id="form12" type="text" className="mb-4" />
+        <MDBInput label="Interior Specifications" id="form12" type="text" className="mb-4" />
         
         </Modal.Body>
         <Modal.Footer className='modal_custom_footer'>
