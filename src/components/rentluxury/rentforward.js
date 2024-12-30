@@ -88,6 +88,13 @@ const Tranferforward = () => {
 
   <div className="car_selected_description">
     <div className="table_left">
+    <h5>
+    {language === "en" ? "Seating Capacity" :
+     language === "it" ? "Capacità di seduta" :
+     language === "du" ? "Zitplaatsen" :
+     language === "fr" ? "Capacité d'assise" : "Seating Capacity"}
+</h5>
+
       <h5>
         {language === "en" ? "Car Make" :
          language === "it" ? "Marca dell'auto" :
@@ -132,11 +139,11 @@ const Tranferforward = () => {
       </h5>
     </div>
     <div className="table_right">
+    <h5>
+    {selectedCard.seatingCapacity[language]}
+  </h5>
   <h5>
-    {language === "en" ? "Mercedes-Benz" :
-     language === "it" ? "Mercedes-Benz" :
-     language === "du" ? "Mercedes-Benz" :
-     language === "fr" ? "Mercedes-Benz" : "Mercedes-Benz"}
+  {selectedCard.carMake[language]}
   </h5>
   
   <h5>
@@ -156,17 +163,11 @@ const Tranferforward = () => {
   </h5>
 
   <h5>
-    {language === "en" ? "144 mph" :
-     language === "it" ? "144 mph" :
-     language === "du" ? "144 mph" :
-     language === "fr" ? "144 mph" : "144 mph"}
+  {selectedCard.topSpeed[language]}
   </h5>
 
   <h5>
-    {language === "en" ? "Premium Gasoline" :
-     language === "it" ? "Benzina Premium" :
-     language === "du" ? "Premium Benzine" :
-     language === "fr" ? "Essence Premium" : "Premium Gasoline"}
+  {selectedCard.fuelType[language]}
   </h5>
 </div>
 

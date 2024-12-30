@@ -1,9 +1,9 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import firstImage from "../../assets/images/caraoselImage/caraouselrentluxury/Group 52 (1)-min.png";
-import secondImage from "../../assets/images/caraoselImage/caraouselrentluxury/zero-take-t4yzxOtDZgQ-unsplash-min.png";
-import thirdImage from "../../assets/images/caraoselImage/caraouselrentluxury/clem-onojeghuo-1mn6ERT0XNc-unsplash-min.png";
-import fourthImage from "../../assets/images/caraoselImage/caraouselrentluxury/tim-meyer-b43180L_j7U-unsplash 1-min.png";
+import secondImage from "../../assets/images/caraoselImage/caraouselrentluxury/New folder/49e4e48c-6465-4cd3-add1-0afe113761c7 1-min.png";
+import thirdImage from "../../assets/images/caraoselImage/caraouselrentluxury/New folder/daniel-lincoln-67HlhGhtl2k-unsplash 1-min.png";
+import fourthImage from "../../assets/images/caraoselImage/caraouselrentluxury/New folder/Audi Interior 1-min.png";
 import fifthImage from "../../assets/images/caraoselImage/caraouselrentluxury/gabbiistudios-4WNkZhqmGy0-unsplash-min.png";
 import { TranslationContext } from "../../contextapi/translationContext";
 import { useContext } from "react";
