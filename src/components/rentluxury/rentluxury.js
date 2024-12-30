@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Class1 from '../../assets/images/rentLuxury/RentLuxuryCars/Car-E-Class2.png'
 import Class2 from '../../assets/images/rentLuxury/RentLuxuryCars/Car-V-Class.png'
 import Class3 from '../../assets/images/rentLuxury/RentLuxuryCars/Car-S-Class.png'
@@ -10,6 +10,8 @@ import { useContext } from "react";
 const Transfercards = () => {
   const { language } = useContext(TranslationContext);
   const { setSelectedCard } = useContext(SelectedCardContext);
+  const [currentPage, setCurrentPage] = useState(1);
+  const cardsPerPage = 3;
 
   const cardsData = [
     {
@@ -149,30 +151,40 @@ const Transfercards = () => {
         fr: "32 MPG",
       },
       img: Class3,
-    },
-  ];
+    },
+  ];
 
   const handleCardClick = (card) => {
-    console.log('Card clicked:', card);  // Log the clicked card
-    setSelectedCard(card); // Set the selected card in context
+    console.log('Card clicked:', card);
+    setSelectedCard(card);
   };
-  
 
+  // Get current cards
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentCards = cardsData.slice(indexOfFirstCard, indexOfLastCard);
 
+  // Change page
+  const paginate = (pageNumber) => {
+    const maxPages = Math.ceil(cardsData.length / cardsPerPage);
+    if (pageNumber > 0 && pageNumber <= maxPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
 
   return (
     <div>
       <h1 className="transfer_service_heading1">
-      
-  {language === 'en'
-    ? 'Experience elegance and comfort'
-    : language === 'it'
-    ? 'Sperimenta eleganza e comfort'
-    : language === 'du'
-    ? 'Ervaar elegantie en comfort'
-    : language === 'fr'
-    ? 'Découvrez l\'élégance et le confort'
-    : 'Experience elegance and comfort'}
+
+        {language === 'en'
+          ? 'Experience elegance and comfort'
+          : language === 'it'
+            ? 'Sperimenta eleganza e comfort'
+            : language === 'du'
+              ? 'Ervaar elegantie en comfort'
+              : language === 'fr'
+                ? 'Découvrez l\'élégance et le confort'
+                : 'Experience elegance and comfort'}
 
 
       </h1>
@@ -180,19 +192,19 @@ const Transfercards = () => {
         {language === "en"
           ? "Sense the Pulse of Perfection on Every Mile You Travel."
           : language === "it"
-          ? "Senti il battito della perfezione in ogni miglio che percorri."
-          : language === "du"
-          ? "Voel de pols van perfectie op elke mijl die je reist."
-          : language === "fr"
-          ? "Sentez le pouls de la perfection à chaque kilomètre que vous parcourez."
-          : "Sense the Pulse of Perfection on Every Mile You Travel."}
+            ? "Senti il battito della perfezione in ogni miglio che percorri."
+            : language === "du"
+              ? "Voel de pols van perfectie op elke mijl die je reist."
+              : language === "fr"
+                ? "Sentez le pouls de la perfection à chaque kilomètre que vous parcourez."
+                : "Sense the Pulse of Perfection on Every Mile You Travel."}
       </h1>
 
       <div className="cards_div_transfer">
-        {cardsData.map((card) => (
+        {currentCards.map((card) => (
           <div key={card.id} className="card_transfer12 custom_height_card">
             <img className="card_transfer1_img1" src={card.img} alt="cards_1" />
-            <h4>{card.title[language]}</h4> {/* Access title based on the selected language */}
+            <h4>{card.title[language]}</h4>
             <div className="card_specs_div">
               <div className="icon_specs_div" style={{ gap: "15px" }}>
                 <div
@@ -206,7 +218,7 @@ const Transfercards = () => {
                   }}
                 >
                   <i className="fas fa-palette" style={{ width: "20px", textAlign: "center" }}></i>
-                  <p style={{ margin: 0 }}>{card.color[language]}</p> {/* Access color based on the selected language */}
+                  <p style={{ margin: 0 }}>{card.color[language]}</p>
                 </div>
                 <div
                   className="testing_123"
@@ -219,7 +231,7 @@ const Transfercards = () => {
                   }}
                 >
                   <i className="fas fa-tachometer-alt" style={{ width: "20px", textAlign: "center" }}></i>
-                  <p style={{ margin: 0 }}>{card.horsepower[language]}</p> {/* Access horsepower based on the selected language */}
+                  <p style={{ margin: 0 }}>{card.horsepower[language]}</p>
                 </div>
                 <div
                   className="testing_123"
@@ -232,44 +244,89 @@ const Transfercards = () => {
                   }}
                 >
                   <i className="fas fa-road" style={{ width: "20px", textAlign: "center" }}></i>
-                  <p style={{ margin: 0 }}>{card.miles[language]}</p> {/* Access miles based on the selected language */}
+                  <p style={{ margin: 0 }}>{card.miles[language]}</p>
                 </div>
               </div>
               <div className="icon_specs_div" style={{ gap: "15px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", width: "100%" }}>
                   <p className="card_specs_p1" style={{ margin: 0, textAlign: "left" }}>
-                    {card.obsidianBlack[language]} {/* Access obsidianBlack based on the selected language */}
+                    {card.obsidianBlack[language]}
                   </p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", width: "100%" }}>
                   <p className="card_specs_p1" style={{ margin: 0, textAlign: "left" }}>
-                    {card.horsepower2[language]} {/* Access horsepower2 based on the selected language */}
+                    {card.horsepower2[language]}
                   </p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", width: "100%" }}>
                   <p className="card_specs_p1" style={{ margin: 0, textAlign: "left" }}>
-                    {card.mpg[language]} {/* Access mpg based on the selected language */}
+                    {card.mpg[language]}
                   </p>
                 </div>
               </div>
             </div>
             <div className="last_rent_now_div">
               <Link to="/rentluxuryforward">
-              <h4 onClick={() => handleCardClick(card)}>
-  {language === 'en'
-    ? 'Rent Now'
-    : language === 'it'
-    ? 'Noleggia ora'
-    : language === 'du'
-    ? 'Huur nu'
-    : language === 'fr'
-    ? 'Louer maintenant'
-    : 'Rent Now'}
-</h4>
+                <h4 onClick={() => handleCardClick(card)}>
+                  {language === 'en'
+                    ? 'Rent Now'
+                    : language === 'it'
+                      ? 'Noleggia ora'
+                      : language === 'du'
+                        ? 'Huur nu'
+                        : language === 'fr'
+                          ? 'Louer maintenant'
+                          : 'Rent Now'}
+                </h4>
               </Link>
             </div>
           </div>
         ))}
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', gap: '10px' }}>
+        <button
+          onClick={() => paginate(currentPage - 1)}
+          style={{
+            padding: '5px 10px',
+            backgroundColor: '#fff',
+            border: '1px solid #007bff',
+            borderRadius: '5px',
+            cursor: 'pointer'
+          }}
+        >
+          <i className="fas fa-chevron-left"></i>
+        </button>
+
+        {Array.from({ length: Math.ceil(cardsData.length / cardsPerPage) }, (_, i) => i + 1).map((number) => (
+          <button
+            key={number}
+            onClick={() => paginate(number)}
+            style={{
+              padding: '5px 15px',
+              backgroundColor: currentPage === number ? '#007bff' : '#fff',
+              color: currentPage === number ? '#fff' : '#000',
+              border: '1px solid #007bff',
+              borderRadius: '5px',
+              cursor: 'pointer'
+            }}
+          >
+            {number}
+          </button>
+        ))}
+
+        <button
+          onClick={() => paginate(currentPage + 1)}
+          style={{
+            padding: '5px 10px',
+            backgroundColor: '#fff',
+            border: '1px solid #007bff',
+            borderRadius: '5px',
+            cursor: 'pointer'
+          }}
+        >
+          <i className="fas fa-chevron-right"></i>
+        </button>
       </div>
     </div>
   );

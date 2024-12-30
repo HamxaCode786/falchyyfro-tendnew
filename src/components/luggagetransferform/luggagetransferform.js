@@ -227,6 +227,7 @@ export default function Luggageransferform() {
                     : "Pickup Location"}
                 </label>
                 <Autosuggest
+                className="autosuggest_1"
                   suggestions={pickupSuggestions}
                   onSuggestionsFetchRequested={({ value }) =>
                     handleSuggestionsFetchRequested({ value }, "pickupLocation")
@@ -255,13 +256,16 @@ export default function Luggageransferform() {
                       borderRadius: "8px", // Rounded corners for a more modern look
                       zIndex: 9999, // Ensures the suggestions container appears above other content
                       padding: "5px 0", // Adds space between suggestions and the border
+                      listStyleType:"none !Important",
                     },
                     suggestion: {
-                      padding: "12px 16px", // Increase padding for better readability and clickability
+                       // Increase padding for better readability and clickability
                       cursor: "pointer", // Indicates that each suggestion is clickable
                       fontSize: "16px",
                       fontWeight: "500",
                       textAlign: "left",
+                      paddingTop:"5px",
+                      paddingBottom:"5px",
                       // Set a comfortable font size
                       fontFamily: "'Arial', sans-serif", // Uniform and clean font style
                       color: "#333", // Dark text for better contrast and readability
@@ -269,11 +273,11 @@ export default function Luggageransferform() {
                     },
                     suggestionHighlighted: {
                       backgroundColor: "#05021f", // Highlight suggestion with a blue color for emphasis
-                      color: "grey", // Change text color to white when highlighted
+                      color: "white", // Change text color to white when highlighted
                       borderRadius: "4px",
                       visibility: "visible !important",
                       zIndex: 9999,
-                      fontWeight: "700",
+                      fontWeight: "bold",
                       // Rounded corners for the highlighted suggestion
                     },
                   }}

@@ -91,6 +91,7 @@
     .luggage-section input, .luggage-section select {
         
          padding: 10px !important;
+         width: 100% !important;
         
     }
 

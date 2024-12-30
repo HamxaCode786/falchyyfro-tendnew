@@ -6,15 +6,17 @@ import image4 from "../../assets/images/homepageimage/concerge2.jpg";
 import { useNavigate } from "react-router-dom";
 import { TranslationContext } from '../../contextapi/translationContext';
 import { useContext } from "react";
+import { useScroll } from '../../contextapi/scrollContext';  // Import the custom hook
 
 
 const Tailored = () => {
   const navigate = useNavigate();
   const { language } = useContext(TranslationContext);
+  const { servicesRef } = useScroll()
 
 
   return (
-    <div className="custom_tailored_heading">
+    <div ref={servicesRef} className="custom_tailored_heading">
       <h3>
   {language === 'en' ? (
     'Tailored Solution For Every Need'

@@ -433,3 +433,44 @@ width: 120px !important;
 }
 
 
+/* CSS to mimic MDBInput */
+
+.autosuggest_drop {
+
+border-radius: 10px !important;
+
+
+}
+
+
+
+@media (max-width: 480px) {
+  .icon_formobile {
+    position: fixed;
+    bottom: 20px !important;
+    right: 20px !important;
+    background-color: rgb(37, 211, 102);
+    border-radius: 50%;
+    padding: 25px !important;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.4) 2px 2px 6px;
+    z-index: 2147483647;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px !important;
+    height: 40px !important;
+    transition: 0.3s;
+    mix-blend-mode: normal;
+    isolation: isolate;
+  }
+}
+
+
+
+.radio_payment {
+
+padding-top: 0px !important;
+padding-bottom: 0px !important;
+
+}

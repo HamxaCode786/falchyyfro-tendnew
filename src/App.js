@@ -8,6 +8,7 @@ import Rentluxuryforward from '../src/components/rentluxury/rentforward';
 import Conceirgebooking from '../src/pages/conceirgebooking';
 import Luggagetransferform from '../src/pages/luggagetransferpage'
 import Aboutpage from '../src/pages/aboutus'
+import Newcontactus from '../src/components/contactus/contactusnew'
 import WhatsAppIcon from '../src/components/homepage/whatsappicon'
 import { Route, Routes } from 'react-router-dom';
 import ScrollToTop from '../src/pages/scrolltop/scroll';
@@ -33,6 +34,7 @@ import './styles/aboutsection.css'
 import './styles/caraosel.css'
 import './styles/caraouselcomponent.css'
 import './styles/customcar.css'
+import './styles/newcontactpage.css'
 import './styles/luggagetransferautocards.css'
 import './styles/aboutusmobile.css'
 import './styles/responsive/layout.css'
@@ -70,6 +72,7 @@ function App() {
             <Route path="/conceirgebooking" element={<Layout><Conceirgebooking /></Layout>} /> {/* Define the route for HomePage */}
             <Route path="/luggagetransferform" element={<Layout><Luggagetransferform /></Layout>} /> {/* Define the route for HomePage */}
             <Route path="/aboutus" element={<Layout><Aboutpage /></Layout>} /> {/* Define the route for HomePage */}
+            <Route path="/newaboutus" element={<Layout><Newcontactus /></Layout>} /> {/* Define the route for HomePage */}
             
 </Routes>
 <WhatsAppIcon />

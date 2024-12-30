@@ -1,22 +1,28 @@
 import React, { useEffect } from 'react';
 import { Card } from 'react-bootstrap'; // Import Card from react-bootstrap
-import Customimage from '../../assets/images/customscrollcards/2.png'; // Import your image
+import Customimage from '../../assets/images/customscrollcards/leonhard-niederwimmer-D62gSEgS_yY-unsplash-min.jpg'; // Import your image
+import Customimage2 from '../../assets/images/customscrollcards/marco-chilese-vnv6nKdtqLc-unsplash-min.jpg'; // Import your image
+import Customimage3 from '../../assets/images/customscrollcards/martino-grua-EbyHdUVfzww-unsplash-min.jpg'; // Import your image
+import Customimage4 from '../../assets/images/customscrollcards/matteo-del-piano-Lfo7YMVHYA8-unsplash-min.jpg'; // Import your image
+import Customimage5 from '../../assets/images/customscrollcards/michele-bitetto-lhrZZUwIGrE-unsplash-min.jpg'; // Import your image
+import Customimage6 from '../../assets/images/customscrollcards/summer-de-witte-KNXZhJ0MNYw-unsplash-min.jpg'; // Import your image
+import Customimage7 from '../../assets/images/customscrollcards/tomas-trajan-d7aQvLjG4S8-unsplash-min.jpg'; // Import your image
 
 const Marquee = () => {
-  // Data array containing information for each card
+  // Data array containing information for each card, with images assigned
   const cardData = [
-    { title: 'GitHub' },
-    { title: 'CodePen' },
-    { title: 'FreeCodeCamp' },
-    { title: 'Dev' },
-    { title: 'React' },
-    { title: 'Vue' },
-    { title: 'Angular' },
-    { title: 'Node.js' },
-    { title: 'WordPress' },
-    { title: 'AWS' },
-    { title: 'Docker' },
-    { title: 'Android' },
+    { title: 'Lahore to Italy', image: Customimage },
+    { title: 'Lahore to Italy', image: Customimage2 },
+    { title: 'Lahore to Italy', image: Customimage3 },
+    { title: 'Lahore to Italy', image: Customimage4 },
+    { title: 'Lahore to Italy', image: Customimage5 },
+    { title: 'Lahore to Italy', image: Customimage6 },
+    { title: 'Lahore to Italy', image: Customimage7 },
+    { title: 'Lahore to Italy', image: Customimage },
+    { title: 'Lahore to Italy', image: Customimage2 },
+    { title: 'Lahore to Italy', image: Customimage3 },
+    { title: 'Lahore to Italy', image: Customimage4 },
+    { title: 'Lahore to Italy', image: Customimage5 },
   ];
 
   useEffect(() => {
@@ -41,28 +47,22 @@ const Marquee = () => {
     });
   };
 
-
-
-
   return (
     <div className="marquee">
       <ul className="marquee-content" style={{ display: 'flex', listStyle: 'none', padding: 0 }}>
         {cardData.map((card, index) => (
           <li key={index} style={{ marginRight: '20px' }}>
             <Card
-             
-            onClick={scrollToBottom} 
-               style={{
-                width: '15rem',
-                backgroundImage: `url(${Customimage})`, // Apply Customimage as the background
+              onClick={scrollToBottom}
+              style={{
+                width: '25rem !Important',
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${card.image})`, // Dynamically apply the image
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 height: '100px', // Adjust height as necessary
-                cursor: 'pointer',
-                borderRadius:"30px",
-                
-                // Add cursor pointer for hover effect
-              }} 
+                // cursor: 'pointer',
+                // borderRadius: "30px",
+              }}
               className="small-card">
               <Card.Body>
                 <Card.Title className='cards_text_locations'>{card.title}</Card.Title>

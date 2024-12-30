@@ -24,7 +24,7 @@ justify-content: center;
 align-items: left !important;
 width: 60%;
 gap: 40px;
-margin-top: 10%;
+margin-top: 5%;
 padding-left: 5%;
 
 
@@ -68,14 +68,17 @@ box-shadow: none;
 
       .image-container {
         position: absolute;
-        right: 0px;
+        right: 6%;
         top: 50%;
-        transform: translateY(-50%); /* Centers the image vertically */
-        width: 700px; /* Adjust the width of the image */
+        transform: translateY(-45%); /* Centers the image vertically */
+         /* Adjust the width of the image */
+         width: 750px;
       }
       
       .image-container img {
-        width: 100%; /* Make image responsive */
+        width: 100%;
+        
+        /* Make image responsive */
         height: auto;
         border-radius: 8px; /* Optional, for rounded corners */
       }
@@ -143,7 +146,7 @@ box-shadow: none;
           right: 0px !important;
           top: 30% !important;
           transform: translateY(-50%) !important; /* Centers the image vertically */
-          width: 55% !important; /* Adjust the width of the image */
+          width: 60% !important; /* Adjust the width of the image */
         }
       
         .landing-content {

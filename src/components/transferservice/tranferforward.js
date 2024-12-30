@@ -1,11 +1,17 @@
 import React from "react";
 import Chauffered from "../../assets/images/transferpage/ChauferwithCar2.png";
-import Payment from '../../components/transferservice/payment'
+import Payment from "../../components/transferservice/payment";
 import { TransferContext } from "../../contextapi/transferservicecontext";
 import { useContext } from "react";
-
+import { useLocation } from "react-router-dom";
 
 const Tranferforward = () => {
+  {
+    /* For Autofill Functionality */
+  }
+  const location = useLocation();
+  const formState = location.state || {};
+
   const { selectedCard } = useContext(TransferContext);
   return (
     <div>
@@ -73,7 +79,7 @@ const Tranferforward = () => {
         </div>
       </div> */}
       <div className="payment_div">
-      <Payment selectedCard={selectedCard} />
+        <Payment selectedCard={selectedCard} initialState={formState} />
       </div>
     </div>
   );

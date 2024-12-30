@@ -165,20 +165,21 @@ const Footer = () => {
                     ? "Services de Conciergerie"
                     : "Concierge Services"}
                 </h4>
-                
               </Link>
               <Link to="/aboutus">
-              <h4>
-  {
-    language === "en" ? "Contact Us" :
-    language === "it" ? "Contattaci" :
-    language === "nl" ? "Contacteer ons" :
-    language === "fr" ? "Contactez-nous" :
-    "Contact Us" // Default
-  }
-</h4>
-
-                
+                <h4>
+                  {
+                    language === "en"
+                      ? "Contact Us"
+                      : language === "it"
+                      ? "Contattaci"
+                      : language === "nl"
+                      ? "Contacteer ons"
+                      : language === "fr"
+                      ? "Contactez-nous"
+                      : "Contact Us" // Default
+                  }
+                </h4>
               </Link>
             </div>
             <div

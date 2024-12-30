@@ -5,9 +5,23 @@ import Drivers from "../../assets/images/transferpage/transfercars/Chauffer-E-Cl
 import Driversv from "../../assets/images/transferpage/transfercars/Chauffer-V-Class.png";
 import Driverss from "../../assets/images/transferpage/transfercars/Chauffer-S-Class.png";
 import { TranslationContext } from "../../contextapi/translationContext";
+import { useNavigate } from "react-router-dom";
 
 const Transfercards = () => {
   const { language } = useContext(TranslationContext);
+
+  {
+    /* For AutoFill Functionality */
+  }
+  const navigate = useNavigate();
+  const handleAutoFillButtonClick = (pickup, dropoff) => {
+    navigate("/transferforward", {
+      state: {
+        pickup,
+        dropoff,
+      },
+    });
+  };
 
   const { selectedCard, setSelectedCard } = useContext(TransferContext); // Destructure both selectedCard and setSelectedCard from context
 
@@ -68,51 +82,69 @@ const Transfercards = () => {
               className={`small_cards_1 ${
                 selectedCard === 1 ? "selected" : ""
               }`}
-              onClick={() => handleSelect(1)}
+              onClick={() => {
+                handleSelect(1);
+                handleAutoFillButtonClick(
+                  "Milan, Lombardy, Italy",
+                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy"
+                );
+              }}
             >
               {language === "en"
-                ? "Airport To Milan"
+                ? "Milan to Malpensa"
                 : language === "it"
-                ? "Aeroporto a Milano"
+                ? "Milano a Malpensa"
                 : language === "du"
-                ? "Luchthaven naar Milaan"
+                ? "Milaan naar Malpensa"
                 : language === "fr"
-                ? "Aéroport à Milan"
-                : "Airport To Milan"}
+                ? "Milan à Malpensa"
+                : "Milan to Malpensa"}
             </button>
             <button
               className="small_cards_2"
               className={`small_cards_2 ${
                 selectedCard === 2 ? "selected" : ""
               }`}
-              onClick={() => handleSelect(2)}
+              onClick={() => {
+                handleSelect(2);
+                handleAutoFillButtonClick(
+                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
+                  "Lake Como, Como, Lombardy, Italy"
+                );
+              }}
             >
               {language === "en"
-                ? "Milan To Airport"
+                ? "Malpensa to Lake Como"
                 : language === "it"
-                ? "Milano a Aeroporto"
+                ? "Malpensa al Lago di Como"
                 : language === "du"
-                ? "Milaan naar Luchthaven"
+                ? "Malpensa naar Comomeer"
                 : language === "fr"
-                ? "Milan à Aéroport"
-                : "Milan To Airport"}
+                ? "Malpensa au lac de Côme"
+                : "Malpensa to Lake Como"}
             </button>
             <button
               className="small_cards_3"
               className={`small_cards_3 ${
                 selectedCard === 3 ? "selected" : ""
               }`}
-              onClick={() => handleSelect(3)}
+              onClick={() => {
+                handleSelect(3);
+                handleAutoFillButtonClick(
+                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
+                  "Bergamo, Lombardy, Italy"
+                );
+              }}
             >
               {language === "en"
-                ? "Airport To Milan"
+                ? "Malpensa to Bergamo"
                 : language === "it"
-                ? "Aeroporto a Milano"
+                ? "Malpensa a Bergamo"
                 : language === "du"
-                ? "Luchthaven naar Milaan"
+                ? "Malpensa naar Bergamo"
                 : language === "fr"
-                ? "Aéroport à Milan"
-                : "Airport To Milan"}
+                ? "Malpensa à Bergame"
+                : "Malpensa to Bergamo"}
             </button>
           </div>
           <h4>
@@ -154,25 +186,25 @@ const Transfercards = () => {
             <div className="grey_button_1_d">
               <p className="first_text1">
                 {language === "en"
-                  ? "$120"
+                  ? "$1200"
                   : language === "it"
-                  ? "€120"
+                  ? "€1200"
                   : language === "du"
-                  ? "€120"
+                  ? "€1200"
                   : language === "fr"
-                  ? "120€"
-                  : "$120"}
+                  ? "1200€"
+                  : "$1200"}
               </p>
               <p>
                 {language === "en"
-                  ? "Hourly Rate"
+                  ? "Daily Rate"
                   : language === "it"
-                  ? "Tariffa oraria"
+                  ? "Tariffa Giornaliera"
                   : language === "du"
-                  ? "Uurloon"
+                  ? "Dagprijs"
                   : language === "fr"
-                  ? "Taux horaire"
-                  : "Hourly Rate"}
+                  ? "Tarif Journalier"
+                  : "Daily Rate"}
               </p>
             </div>
           </div>
@@ -370,51 +402,69 @@ const Transfercards = () => {
               className={`small_cards_1 ${
                 selectedCard === 1 ? "selected" : ""
               }`}
-              onClick={() => handleSelect(1)}
+              onClick={() => {
+                handleSelect(1);
+                handleAutoFillButtonClick(
+                  "Milan, Lombardy, Italy",
+                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy"
+                );
+              }}
             >
               {language === "en"
-                ? "Airport To Milan"
+                ? "Milan to Malpensa"
                 : language === "it"
-                ? "Aeroporto a Milano"
+                ? "Milano a Malpensa"
                 : language === "du"
-                ? "Luchthaven naar Milaan"
+                ? "Milaan naar Malpensa"
                 : language === "fr"
-                ? "Aéroport à Milan"
-                : "Airport To Milan"}
+                ? "Milan à Malpensa"
+                : "Milan to Malpensa"}
             </button>
             <button
               className="small_cards_2"
               className={`small_cards_2 ${
                 selectedCard === 2 ? "selected" : ""
               }`}
-              onClick={() => handleSelect(2)}
+              onClick={() => {
+                handleSelect(2);
+                handleAutoFillButtonClick(
+                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
+                  "Lake Como, Como, Lombardy, Italy"
+                );
+              }}
             >
               {language === "en"
-                ? "Milan To Airport"
+                ? "Malpensa to Lake Como"
                 : language === "it"
-                ? "Milano a Aeroporto"
+                ? "Malpensa al Lago di Como"
                 : language === "du"
-                ? "Milaan naar Luchthaven"
+                ? "Malpensa naar Comomeer"
                 : language === "fr"
-                ? "Milan à Aéroport"
-                : "Milan To Airport"}
+                ? "Malpensa au lac de Côme"
+                : "Malpensa to Lake Como"}
             </button>
             <button
               className="small_cards_3"
               className={`small_cards_3 ${
                 selectedCard === 3 ? "selected" : ""
               }`}
-              onClick={() => handleSelect(3)}
+              onClick={() => {
+                handleSelect(3);
+                handleAutoFillButtonClick(
+                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
+                  "Bergamo, Lombardy, Italy"
+                );
+              }}
             >
               {language === "en"
-                ? "Airport To Milan"
+                ? "Malpensa to Bergamo"
                 : language === "it"
-                ? "Aeroporto a Milano"
+                ? "Malpensa a Bergamo"
                 : language === "du"
-                ? "Luchthaven naar Milaan"
+                ? "Malpensa naar Bergamo"
                 : language === "fr"
-                ? "Aéroport à Milan"
-                : "Airport To Milan"}
+                ? "Malpensa à Bergame"
+                : "Malpensa to Bergamo"}
             </button>
           </div>
           <h4>
@@ -447,14 +497,14 @@ const Transfercards = () => {
               <p className="first_text1">$180</p>
               <p>
                 {language === "en"
-                  ? "Hourly Rate"
+                  ? "Daily Rate"
                   : language === "it"
-                  ? "Tariffa oraria"
+                  ? "Tariffa Giornaliera"
                   : language === "du"
-                  ? "Uurloon"
+                  ? "Dagprijs"
                   : language === "fr"
-                  ? "Taux horaire"
-                  : "Hourly Rate"}
+                  ? "Tarif Journalier"
+                  : "Daily Rate"}
               </p>
             </div>
           </div>
@@ -645,51 +695,69 @@ const Transfercards = () => {
               className={`small_cards_1 ${
                 selectedCard === 1 ? "selected" : ""
               }`}
-              onClick={() => handleSelect(1)}
+              onClick={() => {
+                handleSelect(1);
+                handleAutoFillButtonClick(
+                  "Milan, Lombardy, Italy",
+                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy"
+                );
+              }}
             >
               {language === "en"
-                ? "Airport To Milan"
+                ? "Milan to Malpensa"
                 : language === "it"
-                ? "Aeroporto a Milano"
+                ? "Milano a Malpensa"
                 : language === "du"
-                ? "Luchthaven naar Milaan"
+                ? "Milaan naar Malpensa"
                 : language === "fr"
-                ? "Aéroport à Milan"
-                : "Airport To Milan"}
+                ? "Milan à Malpensa"
+                : "Milan to Malpensa"}
             </button>
             <button
               className="small_cards_2"
               className={`small_cards_2 ${
                 selectedCard === 2 ? "selected" : ""
               }`}
-              onClick={() => handleSelect(2)}
+              onClick={() => {
+                handleSelect(2);
+                handleAutoFillButtonClick(
+                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
+                  "Lake Como, Como, Lombardy, Italy"
+                );
+              }}
             >
               {language === "en"
-                ? "Milan To Airport"
+                ? "Malpensa to Lake Como"
                 : language === "it"
-                ? "Milano a Aeroporto"
+                ? "Malpensa al Lago di Como"
                 : language === "du"
-                ? "Milaan naar Luchthaven"
+                ? "Malpensa naar Comomeer"
                 : language === "fr"
-                ? "Milan à Aéroport"
-                : "Milan To Airport"}
+                ? "Malpensa au lac de Côme"
+                : "Malpensa to Lake Como"}
             </button>
             <button
               className="small_cards_3"
               className={`small_cards_3 ${
                 selectedCard === 3 ? "selected" : ""
               }`}
-              onClick={() => handleSelect(3)}
+              onClick={() => {
+                handleSelect(3);
+                handleAutoFillButtonClick(
+                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
+                  "Bergamo, Lombardy, Italy"
+                );
+              }}
             >
               {language === "en"
-                ? "Airport To Milan"
+                ? "Malpensa to Bergamo"
                 : language === "it"
-                ? "Aeroporto a Milano"
+                ? "Malpensa a Bergamo"
                 : language === "du"
-                ? "Luchthaven naar Milaan"
+                ? "Malpensa naar Bergamo"
                 : language === "fr"
-                ? "Aéroport à Milan"
-                : "Airport To Milan"}
+                ? "Malpensa à Bergame"
+                : "Malpensa to Bergamo"}
             </button>
           </div>
           <h4>
@@ -722,14 +790,14 @@ const Transfercards = () => {
               <p className="first_text1">$150</p>
               <p>
                 {language === "en"
-                  ? "Hourly Rate"
+                  ? "Daily Rate"
                   : language === "it"
-                  ? "Tariffa oraria"
+                  ? "Tariffa Giornaliera"
                   : language === "du"
-                  ? "Uurloon"
+                  ? "Dagprijs"
                   : language === "fr"
-                  ? "Taux horaire"
-                  : "Hourly Rate"}
+                  ? "Tarif Journalier"
+                  : "Daily Rate"}
               </p>
             </div>
           </div>

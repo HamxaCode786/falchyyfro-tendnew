@@ -81,8 +81,10 @@ align-items: center;
 }
 
 .form-control {
-    border-radius: 0 !important;
+    border-radius: 0;
 }
+
+
 
 
 

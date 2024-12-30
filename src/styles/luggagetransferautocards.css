@@ -1,10 +1,12 @@
 :root {
     --marquee-width: 100vw;
-    --marquee-height: 180px;
+    --marquee-height: 125px;
     /* --marquee-elements: 12; */ /* defined with JavaScript */
-    --marquee-elements-displayed: 5;
+    --marquee-elements-displayed: 10;
     --marquee-element-width: calc(var(--marquee-width) / var(--marquee-elements-displayed));
     --marquee-animation-duration: calc(var(--marquee-elements) * 3s);
+    overflow-x: hidden;
+    
   }
   
   .marquee {
@@ -12,7 +14,7 @@
     height: var(--marquee-height);
     background-color: #161b33;
     color: #eee;
-    overflow: hidden;
+    overflow-x: hidden !important;
     position: relative;
   }
   
@@ -39,8 +41,8 @@
     list-style: none;
     height: 100%;
     display: flex;
-    animation: scrolling var(--marquee-animation-duration) linear infinite;
-    gap: 2%;
+    /* animation: scrolling var(--marquee-animation-duration) linear infinite; */
+    gap: 0%;
   }
   
   /* Stop animation on hover */
@@ -68,44 +70,54 @@
   .marquee-content li img {
     width: 100%;
     /* height: 100%; */
-    border: 2px solid #eee;
+    
   }
   
   @media (max-width: 600px) {
     html { font-size: 12px; }
     :root {
       --marquee-width: 100vw;
-      --marquee-height: 150px;
+      --marquee-height: 80px;
       --marquee-elements-displayed: 3;
     }
     .marquee:before, .marquee:after { width: 5rem; }
+
+    .small-card {
+
+width: 120px !important;
+height: 50px !important;
+
+
+    }
+
+
+
   }
   
 
   .small-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+    cursor: pointer;
   }
   
-  .small-card:hover {
-    transform: scale(1.3); /* Enlarge the card */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Add shadow for effect */
-  }
-
+  
 
   .cards_text_locations {
 
-color: #eee !important;
+color:#dfb045 !important;
+font-style: italic;
+font-weight: 500;
 
 
   }
 
-  .small-card {
-
-border: solid !important;
-border-color: #eee !important;
-border-width: 2px !important;
-
-
-
+  
+  #react-autowhatever-1 ul {
+    list-style: none !important;
+    padding-left: 5px;
   }
 
+  #react-autowhatever-1 ul li {
+text-align: left;    
+    width: 100%;
+    padding-left: 5px;
+  }
