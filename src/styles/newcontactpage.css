@@ -19,7 +19,7 @@ flex-direction: row;
 justify-content: center;
 align-items: center;
 width: 100%;
-gap: 35px;
+gap: 25px;
 margin-top: 30px;
 margin-bottom: 30px;
 
@@ -29,7 +29,7 @@ margin-bottom: 30px;
 
 
 .new_contact_heading {
-  font-size: 52px;
+  font-size: 40px;
   text-align: center;
   color: #05021F;
   font-weight: 600;
@@ -55,7 +55,7 @@ margin-bottom: 30px;
 
 .below_form_component {
 
-min-height: 250px;
+min-height: 230px;
 background-color: #e4e4e4;
 display: grid;
 grid-template-columns: 1fr 1fr 1fr;
@@ -80,8 +80,8 @@ gap: 5px;
     align-items: center;
     justify-content: center;
     background-color: #05021f; /* Background color for the circle */
-    width: 120px; /* Circle size */
-    height: 120px; /* Circle size */
+    width: 100px; /* Circle size */
+    height: 100px; /* Circle size */
     border-radius: 50%; /* Makes it circular */
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1); /* Optional shadow */
     margin-top: -15%;
@@ -91,7 +91,7 @@ gap: 5px;
 
   .icon-container i {
     color: #dfb045; /* Icon color */
-    font-size: 60px; /* Icon size */
+    font-size: 50px; /* Icon size */
   }
 
 
@@ -183,8 +183,8 @@ min-height: 40px !important;
 .icon-container {
 
 margin-top: 14%;
-width: 180px;
-height: 180px;
+width: 120px;
+height: 120px;
 
 
 }
@@ -267,7 +267,6 @@ justify-content: center;
 .form-control.new1122 {
 
 min-height: 40px !important;
-border-radius: 30px !important;
 
 
 }
@@ -297,7 +296,7 @@ height: 180px;
       background-color: transparent; /* Fallback background color */
       overflow: hidden; /* Hide any parts of the background outside the container */
       width: 100%;
-      min-height: 750px;
+      min-height: 620px;
     }
     
     .componantourt_di1::before {

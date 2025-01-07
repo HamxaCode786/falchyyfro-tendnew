@@ -5,7 +5,8 @@ import Lambologo from "../../assets/images/rentLuxury/RentLuxuryCars/icons/icons
 import Porschelogo from "../../assets/images/rentLuxury/RentLuxuryCars/porsche/icons8-porsche-48.png";
 import Bentlogo from "../../assets/images/rentLuxury/RentLuxuryCars/icons/icons8-bentley-48.png";
 import BMWlogo from "../../assets/images/rentLuxury/RentLuxuryCars/icons/icons8-bmw-48.png";
-import Landroverlogo from '../../assets/images/rentLuxury/RentLuxuryCars/icons/land-rover-logo-png_seeklogo-201638 1.png'
+import Landroverlogo from "../../assets/images/rentLuxury/RentLuxuryCars/icons/land-rover-logo-png_seeklogo-201638 1.png";
+import Audilogo from "../../assets/images/rentLuxury/RentLuxuryCars/icons/AudiLogo.png";
 
 import Class1 from "../../assets/images/rentLuxury/RentLuxuryCars/Car-E-Class2.png";
 import Class2 from "../../assets/images/rentLuxury/RentLuxuryCars/Car-V-Class.png";
@@ -26,6 +27,13 @@ import Class16 from "../../assets/images/rentLuxury/RentLuxuryCars/BMW/X5 30d Ms
 import Class17 from "../../assets/images/rentLuxury/RentLuxuryCars/RANGEROVER/Range Rover Vogue (7 Seats) - SUV  2024.png";
 import Class18 from "../../assets/images/rentLuxury/RentLuxuryCars/RANGEROVER/Range-Rover-Sport-HSE-SUV.png";
 import Class19 from "../../assets/images/rentLuxury/RentLuxuryCars/RANGEROVER//Range-Rover-Sport-HSE-SUV.png";
+import Class20 from "../../assets/images/rentLuxury/RentLuxuryCars/audi/Q8 50TDI Sline - SUV _ 2024 metallic black.png";
+import Class21 from "../../assets/images/rentLuxury/RentLuxuryCars/audi/RS6.png";
+import Class22 from "../../assets/images/rentLuxury/RentLuxuryCars/audi/Audi Q7 50TDI Sline (7 Seats) - SUV _ 2024.png";
+import Class23 from "../../assets/images/rentLuxury/RentLuxuryCars/audi/Audi Q7 50TDI Sline (7 Seats) - SUV _ 2021.png";
+import Class24 from "../../assets/images/rentLuxury/RentLuxuryCars/Mercedes/G63 AMG - SUV _ 2025.png";
+import Class25 from "../../assets/images/rentLuxury/RentLuxuryCars/Mercedes/G63 AMG - SUV _ 2021.png";
+import Class26 from "../../assets/images/rentLuxury/RentLuxuryCars/Mercedes/GLE AMG line - SUV _ 2024.png";
 import { Link } from "react-router-dom";
 import { TranslationContext } from "../../contextapi/translationContext";
 import { SelectedCardContext } from "../../contextapi/rentluxurycontext";
@@ -35,7 +43,7 @@ const Transfercards = () => {
   const { language } = useContext(TranslationContext);
   const { setSelectedCard } = useContext(SelectedCardContext);
   const [currentPage, setCurrentPage] = useState(1);
-  const cardsPerPage = 3;
+  const cardsPerPage = 6;
 
   const cardsData = [
     {
@@ -1437,6 +1445,524 @@ const Transfercards = () => {
       img: Class19,
       img2: Landroverlogo,
     },
+    {
+      id: 20,
+      title: {
+        en: "RS6 (Station Wagon)",
+        it: "RS6 (Station Wagon)",
+        du: "RS6 (Station Wagon)",
+        fr: "RS6 (Station Wagon)",
+      },
+
+      color: {
+        en: "Color",
+        it: "Colore",
+        du: "Kleur",
+        fr: "Couleur",
+      },
+      horsepower: {
+        en: "Power",
+        it: "Potenza",
+        du: "Kracht",
+        fr: "Puissance",
+      },
+      miles: {
+        en: "Mileage",
+        it: "Chilometraggio",
+        du: "Kilometerstand",
+        fr: "Kilométrage",
+      },
+      obsidianBlack: {
+        en: "Metallic Black",
+        it: "Nero Metallizzato", // Italian translation for Metallic Black
+        du: "Metaal Zwart", // Dutch translation for Metallic Black
+        fr: "Noir Métallique", // French translation for Metallic Black
+      },
+
+      horsepower2: {
+        en: "600 HP",
+        it: "600 CV",
+        du: "600 PK",
+        fr: "600 CH",
+      },
+      mpg: {
+        en: "20 MPG",
+        it: "20 MPG",
+        du: "20 MPG",
+        fr: "20 MPG",
+      },
+      carMake: {
+        en: "Audi (2021)",
+        it: "Audi (2021)",
+        du: "Audi (2021)",
+        fr: "Audi (2021)",
+      },
+
+      topSpeed: {
+        en: "174 MPH ",
+        it: "174 MPH",
+        du: "174 MPH",
+        fr: "174 MPH",
+      },
+      seatingCapacity: {
+        en: "2+3",
+        it: "2+3",
+        du: "2+3",
+        fr: "2+3",
+      },
+      fuelType: {
+        en: "Premium Gasoline",
+        it: "Benzina Premium",
+        du: "Premium Benzine",
+        fr: "Essence Premium",
+      },
+
+      img: Class20,
+      img2: Audilogo,
+    },
+    {
+      id: 21,
+      title: {
+        en: "Q8 50TDI Sline (SUV)",
+        it: "Q8 50TDI Sline (SUV)",
+        du: "Q8 50TDI Sline (SUV)",
+        fr: "Q8 50TDI Sline (SUV)",
+      },
+
+      color: {
+        en: "Color",
+        it: "Colore",
+        du: "Kleur",
+        fr: "Couleur",
+      },
+      horsepower: {
+        en: "Power",
+        it: "Potenza",
+        du: "Kracht",
+        fr: "Puissance",
+      },
+      miles: {
+        en: "Mileage",
+        it: "Chilometraggio",
+        du: "Kilometerstand",
+        fr: "Kilométrage",
+      },
+      obsidianBlack: {
+        en: "Metallic Black",
+        it: "Nero Metallizzato", // Italian translation for Metallic Black
+        du: "Metaal Zwart", // Dutch translation for Metallic Black
+        fr: "Noir Métallique", // French translation for Metallic Black
+      },
+
+      horsepower2: {
+        en: "286 HP",
+        it: "286 CV",
+        du: "286 PK",
+        fr: "286 CH",
+      },
+      mpg: {
+        en: "20 MPG",
+        it: "20 MPG",
+        du: "20 MPG",
+        fr: "20 MPG",
+      },
+      carMake: {
+        en: "Audi (2024)",
+        it: "Audi (2024)",
+        du: "Audi (2024)",
+        fr: "Audi (2024)",
+      },
+
+      topSpeed: {
+        en: "155 MPH ",
+        it: "155 MPH",
+        du: "155 MPH",
+        fr: "155 MPH",
+      },
+      seatingCapacity: {
+        en: "2+3",
+        it: "2+3",
+        du: "2+3",
+        fr: "2+3",
+      },
+      fuelType: {
+        en: "Diesel",
+        it: "Diesel",
+        du: "Diesel",
+        fr: "Diesel",
+      },
+      img: Class21,
+      img2: Audilogo,
+    },
+    {
+      id: 22,
+      title: {
+        en: "Q7 50TDI Sline (SUV)",
+        it: "Q7 50TDI Sline (SUV)",
+        du: "Q7 50TDI Sline (SUV)",
+        fr: "Q7 50TDI Sline (SUV)",
+      },
+
+      color: {
+        en: "Color",
+        it: "Colore",
+        du: "Kleur",
+        fr: "Couleur",
+      },
+      horsepower: {
+        en: "Power",
+        it: "Potenza",
+        du: "Kracht",
+        fr: "Puissance",
+      },
+      miles: {
+        en: "Mileage",
+        it: "Chilometraggio",
+        du: "Kilometerstand",
+        fr: "Kilométrage",
+      },
+      obsidianBlack: {
+        en: "Metallic Black",
+        it: "Nero Metallizzato", // Italian translation for Metallic Black
+        du: "Metaal Zwart", // Dutch translation for Metallic Black
+        fr: "Noir Métallique", // French translation for Metallic Black
+      },
+
+      horsepower2: {
+        en: "286 HP",
+        it: "286 CV",
+        du: "286 PK",
+        fr: "286 CH",
+      },
+      mpg: {
+        en: "30 MPG",
+        it: "30 MPG",
+        du: "30 MPG",
+        fr: "30 MPG",
+      },
+      carMake: {
+        en: "Audi (2024)",
+        it: "Audi (2024)",
+        du: "Audi (2024)",
+        fr: "Audi (2024)",
+      },
+
+      topSpeed: {
+        en: "155 MPH ",
+        it: "155 MPH",
+        du: "155 MPH",
+        fr: "155 MPH",
+      },
+      seatingCapacity: {
+        en: "2+3",
+        it: "2+3",
+        du: "2+3",
+        fr: "2+3",
+      },
+      fuelType: {
+        en: "Diesel",
+        it: "Diesel",
+        du: "Diesel",
+        fr: "Diesel",
+      },
+      img: Class22,
+      img2: Audilogo,
+    },
+    {
+      id: 23,
+      title: {
+        en: "Q7 50TDI Sline (SUV)",
+        it: "Q7 50TDI Sline (SUV)",
+        du: "Q7 50TDI Sline (SUV)",
+        fr: "Q7 50TDI Sline (SUV)",
+      },
+
+      color: {
+        en: "Color",
+        it: "Colore",
+        du: "Kleur",
+        fr: "Couleur",
+      },
+      horsepower: {
+        en: "Power",
+        it: "Potenza",
+        du: "Kracht",
+        fr: "Puissance",
+      },
+      miles: {
+        en: "Mileage",
+        it: "Chilometraggio",
+        du: "Kilometerstand",
+        fr: "Kilométrage",
+      },
+      obsidianBlack: {
+        en: "Metallic Black",
+        it: "Nero Metallizzato", // Italian translation for Metallic Black
+        du: "Metaal Zwart", // Dutch translation for Metallic Black
+        fr: "Noir Métallique", // French translation for Metallic Black
+      },
+
+      horsepower2: {
+        en: "286 HP",
+        it: "286 CV",
+        du: "286 PK",
+        fr: "286 CH",
+      },
+      mpg: {
+        en: "30 MPG",
+        it: "30 MPG",
+        du: "30 MPG",
+        fr: "30 MPG",
+      },
+      carMake: {
+        en: "Audi (2021)",
+        it: "Audi (2021)",
+        du: "Audi (2021)",
+        fr: "Audi (2021)",
+      },
+
+      topSpeed: {
+        en: "155 MPH ",
+        it: "155 MPH",
+        du: "155 MPH",
+        fr: "155 MPH",
+      },
+      seatingCapacity: {
+        en: "2+3",
+        it: "2+3",
+        du: "2+3",
+        fr: "2+3",
+      },
+      fuelType: {
+        en: "Diesel",
+        it: "Diesel",
+        du: "Diesel",
+        fr: "Diesel",
+      },
+      img: Class23,
+      img2: Audilogo,
+    },
+    {
+      id: 24,
+      title: {
+        en: "G63 AMG (SUV)",
+        it: "G63 AMG (SUV)",
+        du: "G63 AMG (SUV)",
+        fr: "G63 AMG (SUV)",
+      },
+
+      color: {
+        en: "Color",
+        it: "Colore",
+        du: "Kleur",
+        fr: "Couleur",
+      },
+      horsepower: {
+        en: "Power",
+        it: "Potenza",
+        du: "Kracht",
+        fr: "Puissance",
+      },
+      miles: {
+        en: "Mileage",
+        it: "Chilometraggio",
+        du: "Kilometerstand",
+        fr: "Kilométrage",
+      },
+      obsidianBlack: {
+        en: "Metallic Black",
+        it: "Nero Metallizzato", // Italian translation for Metallic Black
+        du: "Metaal Zwart", // Dutch translation for Metallic Black
+        fr: "Noir Métallique", // French translation for Metallic Black
+      },
+
+      horsepower2: {
+        en: "585 HP",
+        it: "585 CV",
+        du: "585 PK",
+        fr: "585 CH",
+      },
+      mpg: {
+        en: "30 MPG",
+        it: "30 MPG",
+        du: "30 MPG",
+        fr: "30 MPG",
+      },
+      carMake: {
+        en: "Mercedes (2025)",
+        it: "Mercedes (2025)",
+        du: "Mercedes (2025)",
+        fr: "Mercedes (2025)",
+      },
+
+      topSpeed: {
+        en: "137 MPH ",
+        it: "137 MPH",
+        du: "137 MPH",
+        fr: "137 MPH",
+      },
+      seatingCapacity: {
+        en: "2+3",
+        it: "2+3",
+        du: "2+3",
+        fr: "2+3",
+      },
+      fuelType: {
+        en: "Premium Gasoline",
+        it: "Benzina Premium",
+        du: "Premium Benzine",
+        fr: "Essence Premium"
+    },    
+      img: Class24,
+      img2: Mercedeslogo,
+    },
+    {
+      id: 25,
+      title: {
+        en: "G63 AMG (SUV)",
+        it: "G63 AMG (SUV)",
+        du: "G63 AMG (SUV)",
+        fr: "G63 AMG (SUV)",
+      },
+
+      color: {
+        en: "Color",
+        it: "Colore",
+        du: "Kleur",
+        fr: "Couleur",
+      },
+      horsepower: {
+        en: "Power",
+        it: "Potenza",
+        du: "Kracht",
+        fr: "Puissance",
+      },
+      miles: {
+        en: "Mileage",
+        it: "Chilometraggio",
+        du: "Kilometerstand",
+        fr: "Kilométrage",
+      },
+      obsidianBlack: {
+        en: "Metallic Black",
+        it: "Nero Metallizzato", // Italian translation for Metallic Black
+        du: "Metaal Zwart", // Dutch translation for Metallic Black
+        fr: "Noir Métallique", // French translation for Metallic Black
+      },
+
+      horsepower2: {
+        en: "585 HP",
+        it: "585 CV",
+        du: "585 PK",
+        fr: "585 CH",
+      },
+      mpg: {
+        en: "30 MPG",
+        it: "30 MPG",
+        du: "30 MPG",
+        fr: "30 MPG",
+      },
+      carMake: {
+        en: "Mercedes (2025)",
+        it: "Mercedes (2025)",
+        du: "Mercedes (2025)",
+        fr: "Mercedes (2025)",
+      },
+
+      topSpeed: {
+        en: "137 MPH ",
+        it: "137 MPH",
+        du: "137 MPH",
+        fr: "137 MPH",
+      },
+      seatingCapacity: {
+        en: "2+3",
+        it: "2+3",
+        du: "2+3",
+        fr: "2+3",
+      },
+      fuelType: {
+        en: "Premium Gasoline",
+        it: "Benzina Premium",
+        du: "Premium Benzine",
+        fr: "Essence Premium"
+    },    
+      img: Class25,
+      img2: Mercedeslogo,
+    },
+    {
+      id: 26,
+      title: {
+        en: "GLE AMG line (SUV)",
+        it: "GLE AMG line (SUV)",
+        du: "GLE AMG line (SUV)",
+        fr: "GLE AMG line (SUV)"
+    },
+      color: {
+        en: "Color",
+        it: "Colore",
+        du: "Kleur",
+        fr: "Couleur",
+      },
+      horsepower: {
+        en: "Power",
+        it: "Potenza",
+        du: "Kracht",
+        fr: "Puissance",
+      },
+      miles: {
+        en: "Mileage",
+        it: "Chilometraggio",
+        du: "Kilometerstand",
+        fr: "Kilométrage",
+      },
+      obsidianBlack: {
+        en: "Metallic Black",
+        it: "Nero Metallizzato", // Italian translation for Metallic Black
+        du: "Metaal Zwart", // Dutch translation for Metallic Black
+        fr: "Noir Métallique", // French translation for Metallic Black
+      },
+
+      horsepower2: {
+        en: "289 HP",
+        it: "289 CV",
+        du: "289 PK",
+        fr: "289 CH",
+      },
+      mpg: {
+        en: "23 MPG",
+        it: "23 MPG",
+        du: "23 MPG",
+        fr: "23 MPG",
+      },
+      carMake: {
+        en: "Mercedes (2024)",
+        it: "Mercedes (2024)",
+        du: "Mercedes (2024)",
+        fr: "Mercedes (2024)",
+      },
+
+      topSpeed: {
+        en: "155 MPH ",
+        it: "155 MPH",
+        du: "155 MPH",
+        fr: "155 MPH",
+      },
+      seatingCapacity: {
+        en: "2+3",
+        it: "2+3",
+        du: "2+3",
+        fr: "2+3",
+      },
+      fuelType: {
+        en: "Diesel",
+        it: "Diesel",
+        du: "Diesel",
+        fr: "Diesel"
+    },
+      img: Class26,
+      img2: Mercedeslogo,
+    },
   ];
 
   const handleCardClick = (card) => {
@@ -1458,7 +1984,6 @@ const Transfercards = () => {
       setCurrentPage((prevPage) => prevPage + 1);
     }
   };
-  
 
   const prevPage = () => {
     if (currentPage > 1) {
@@ -1470,6 +1995,24 @@ const Transfercards = () => {
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
   const currentCards = cardsData.slice(indexOfFirstCard, indexOfLastCard);
+
+  // Calculate the range of pagination buttons to show
+  const maxPages = Math.ceil(cardsData.length / cardsPerPage);
+  const paginationRange = [];
+
+  if (maxPages <= 3) {
+    // If there are fewer than 3 pages, show all of them
+    paginationRange.push(...Array.from({ length: maxPages }, (_, i) => i + 1));
+  } else {
+    // Show only 3 pages at a time
+    if (currentPage === 1) {
+      paginationRange.push(1, 2, 3);
+    } else if (currentPage === maxPages) {
+      paginationRange.push(maxPages - 2, maxPages - 1, maxPages);
+    } else {
+      paginationRange.push(currentPage - 1, currentPage, currentPage + 1);
+    }
+  }
 
   return (
     <div>
@@ -1648,10 +2191,7 @@ const Transfercards = () => {
           <i className="fas fa-chevron-left"></i>
         </button>
 
-        {Array.from(
-          { length: Math.ceil(cardsData.length / cardsPerPage) },
-          (_, i) => i + 1
-        ).map((number) => (
+        {paginationRange.map((number) => (
           <button
             key={number}
             onClick={() => paginate(number)}
@@ -1670,7 +2210,7 @@ const Transfercards = () => {
 
         <button
           onClick={nextPage}
-          disabled={currentPage === Math.ceil(cardsData.length / cardsPerPage)} // Disable next button on last page
+          disabled={currentPage === maxPages} // Disable next button on last page
           style={{
             padding: "5px 10px",
             backgroundColor: "#fff",

@@ -1,35 +1,48 @@
-import React from 'react';
-import { BsWhatsapp } from 'react-icons/bs'; // Correct import for WhatsApp icon from react-icons/bs
+import React, { useState, useEffect } from 'react';
+import { FloatingWhatsApp } from 'react-floating-whatsapp'; // Correct import for named export
+import { BsWhatsapp } from 'react-icons/bs'; // WhatsApp icon
+import Falchyy from '../../assets/images/whatsapplogo1.png'
 
 const WhatsAppIcon = () => {
+  const [notificationCount, setNotificationCount] = useState(1); // Set initial notification count to 1
+  const [chatMessage, setChatMessage] = useState("Hi, how can I assist you today?"); // Default message
+
+  // Example of how to update notification count
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setNotificationCount(0); // Reset notification count after some time (e.g., 5 seconds)
+    }, 5000);
+
+    return () => clearTimeout(timer); // Cleanup timeout when the component is unmounted
+  }, []);
+
+  // Example of how to dynamically change the chat message
+  useEffect(() => {
+    const dynamicMessage = "Hello! I noticed you are browsing our Services. How can I assist you?";
+    setChatMessage(dynamicMessage);
+  }, []);
+
   return (
-    <div className='icon_formobile' style={{
-        position: 'fixed',
-        bottom: '80px',
-        right: '40px',
-        backgroundColor: '#25D366',
-        borderRadius: '50%',
-        padding: '15px', // Adjust padding to make it look better
-        cursor: 'pointer',
-        boxShadow: '2px 2px 6px rgba(0,0,0,0.4)',
-        zIndex: 99999999999, // Ensured z-index is high to stay on top
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '60px', // Adjust width and height for better appearance
-        height: '60px',
-        transition: 'all 0.3s ease',
-        mixBlendMode: 'normal',
-        isolation: 'isolate'
-      }}>
-        <a 
-          href="https://wa.me/+393338000177"  // Use the actual WhatsApp number you want to link
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="whatsapp_icon_link"
-        >
-          <BsWhatsapp size={40} color="white" /> {/* Adjust size here for proper fitting */}
-        </a>
+    <div>
+      <FloatingWhatsApp
+        phoneNumber="+393338000177" // Replace with your phone number
+        accountName="Falchyy"  // Customize the display name
+        allowClickAway={true} // Closes the chat when clicking outside
+        notificationCount={notificationCount} // Dynamically set notification count
+        statusMessage="Hello, how can I help you?" // Optional status message
+        chatMessage={chatMessage} // Dynamically populated chat message
+        darkMode={false}
+        avatar={Falchyy}
+        buttonStyle={{
+          backgroundColor: '#25D366',
+          borderRadius: '50%',
+          width: '70px',
+          height: '70px',
+          boxShadow: '2px 2px 6px rgba(0,0,0,0.4)',
+        }}
+        icon={<BsWhatsapp size={73} color="white" />} // Using the icon as you originally did
+        className="floating-whatsapp-icon"
+      />
     </div>
   );
 };

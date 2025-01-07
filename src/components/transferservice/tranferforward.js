@@ -18,7 +18,7 @@ const Tranferforward = () => {
       <div className="driver_car_div">
         <img className="chauffer_2enh" src={selectedCard.image} />
         <h2>{selectedCard.name}</h2>
-        <ul className="icons_list_drivers">
+        {/* <ul className="icons_list_drivers">
           <li>
             <i class="fas fa-wifi fa-1x"></i> Free Wifi
           </li>
@@ -28,19 +28,20 @@ const Tranferforward = () => {
           <li>
             <i class="fas fa-bottle-water fa-1x"></i> Complementary Water Bottle
           </li>
-        </ul>
+        </ul> */}
       </div>
       <div className="passenger_icons_list">
         <ul className="small_cards_white">
           <li className="box_small_card">
             <h4>
-              <i className="fas fa-user-friends"></i> Passengers
+              <i className="fas fa-user-friends"></i> Passengers: {selectedCard?.passengers || 'N/A'}
             </h4>
+
           </li>
 
           <li className="box_small_card">
             <h4>
-              <i className="fas fa-suitcase-rolling"></i> 6 Large Suitcases
+            <i className="fas fa-bottle-water"></i> Water Bottle
             </h4>
           </li>
 
@@ -52,7 +53,7 @@ const Tranferforward = () => {
 
           <li className="box_small_card">
             <h4>
-              <i className="fas fa-suitcase"></i> 4 Small Suitcases
+              <i className="fas fa-suitcase"></i>{selectedCard.luggage}
             </h4>
           </li>
         </ul>

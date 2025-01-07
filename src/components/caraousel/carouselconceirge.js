@@ -4,6 +4,8 @@ import firstImage from "../../assets/images/caraoselImage/CONCEIRGECARAOUSEL/Con
 import secondImage from "../../assets/images/caraoselImage/CONCEIRGECARAOUSEL/na.png";
 import thirdImage from "../../assets/images/caraoselImage/CONCEIRGECARAOUSEL/nb.png";
 import fourthImage from "../../assets/images/caraoselImage/CONCEIRGECARAOUSEL/nc.png";
+import fifthImage from "../../assets/images/caraoselImage/CONCEIRGECARAOUSEL/Adventures-min.png";
+
 import { TranslationContext } from "../../contextapi/translationContext";
 import { useContext } from "react";
 
@@ -71,6 +73,17 @@ const Carouselconceirge = () => {
           <img
             className="d-block w-100 custom_styling_image"
             src={fourthImage}
+            alt="Third slide"
+          />
+          <Carousel.Caption>
+            {/* <h3>Third slide label</h3>
+            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p> */}
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100 custom_styling_image"
+            src={fifthImage}
             alt="Third slide"
           />
           <Carousel.Caption>

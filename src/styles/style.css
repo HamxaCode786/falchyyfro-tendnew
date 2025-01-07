@@ -17,6 +17,14 @@ font-style: normal;
 
 }
 
+
+body {
+
+  padding-right: 0px !important;
+
+}
+
+
 /* CSS for fade-in animation */
 /* CSS for fade-in and scale-up animation */
 input::placeholder {
@@ -51,6 +59,7 @@ min-height: 280px;
   font-size: 32px;
   color: #1B1B1B;
   text-align: center;
+  padding-bottom: 15px;
 
 
 
@@ -339,6 +348,12 @@ width: 120px !important;
 
 
   }
+
+  .custom_hide_for_laptop {
+
+margin-top: 5px;
+
+  }
   
 
 
@@ -472,5 +487,77 @@ border-radius: 10px !important;
 
 padding-top: 0px !important;
 padding-bottom: 0px !important;
+
+}
+
+
+
+
+/* In your stylesheet */
+
+
+/* Wrapper container for child seat input field */
+.child-seat-container {
+  opacity: 0; /* Start as invisible */
+  max-height: 0; /* Initially collapse the container */
+  overflow: hidden; /* Hide the overflowing content */
+  transition: opacity 0.5s ease, max-height 0.5s ease; /* Apply transition to opacity and max-height */
+}
+
+.child-seat-container.show {
+  opacity: 1; /* Make the container visible */
+  max-height: 200px; /* Set a max-height that accommodates the child seat input field */
+}
+
+/* Optional: Style the input for better visual appeal */
+
+
+/* Remove the default focus ring on the checkbox */
+.MDBCheckbox:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Optionally, you can add your own custom focus styling if needed */
+.MDBCheckbox:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+.terms_conditions_cards {
+
+margin-bottom: 35px;
+margin-: 35px;
+
+}
+
+
+.card_background {
+
+  background-color: #f9f9f9 !important;
+border: 1px solid #eabf4a !important;
+
+}
+
+
+
+.button_custom_cars_hover_issue:hover {
+
+background-color: #05021f !important;
+
+
+}
+
+.flatpickr-input:focus {
+  box-shadow: inset 0px 0px 0px 1px #3b71ca !important;
+  border-color: #3b71ca !important;
+}
+
+
+.marker_origin {
+
+background-color: #3b71ca;
+
 
 }

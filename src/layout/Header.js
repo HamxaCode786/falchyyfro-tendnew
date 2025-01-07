@@ -115,15 +115,7 @@ const Header = () => {
                 style={isActivePath("/") ? { color: "#0dc270" } : {}}
               >
                 <strong>
-                  {language === "en"
-                    ? "Home"
-                    : language === "it"
-                    ? "Casa"
-                    : language === "du"
-                    ? "Huis"
-                    : language === "fr"
-                    ? "Accueil"
-                    : "Home"}
+                 Home
                 </strong>
               </Link>
             </p>
@@ -140,15 +132,7 @@ const Header = () => {
                 style={isActivePath("/services") ? { color: "#0dc270" } : {}}
               >
                 <strong>
-                  {language === "en"
-                    ? "Rent Luxury"
-                    : language === "it"
-                    ? "Noleggia Lusso"
-                    : language === "du"
-                    ? "Huur Luxe"
-                    : language === "fr"
-                    ? "Louer du luxe"
-                    : "Rent Luxury"}
+                  Rent Luxury
                 </strong>
               </Link>
             </p>
@@ -160,15 +144,9 @@ const Header = () => {
                 style={isActivePath("/services") ? { color: "#0dc270" } : {}}
               >
                 <strong>
-                  {language === "en"
-                    ? "Transfer Service"
-                    : language === "it"
-                    ? "Servizio di Trasferimento"
-                    : language === "du"
-                    ? "Transfer Service"
-                    : language === "fr"
-                    ? "Service de Transfert"
-                    : "Transfer Service"}
+                  
+                    Transfer Service
+                    
                 </strong>
               </Link>
             </p>
@@ -180,15 +158,8 @@ const Header = () => {
                 style={isActivePath("/services") ? { color: "#0dc270" } : {}}
               >
                 <strong>
-                  {language === "en"
-                    ? "Luggage Transfer & Deposit"
-                    : language === "it"
-                    ? "Trasferimento e Deposito Bagagli"
-                    : language === "du"
-                    ? "Bagageoverdracht & Storting"
-                    : language === "fr"
-                    ? "Transfert et Dépôt des Bagages"
-                    : "Luggage Transfer & Deposit"}
+                  Luggage Transfer & Deposit
+                    
                 </strong>
               </Link>
             </p>
@@ -200,15 +171,9 @@ const Header = () => {
                 style={isActivePath("/services") ? { color: "#0dc270" } : {}}
               >
                 <strong>
-                  {language === "en"
-                    ? "Concierge Services"
-                    : language === "it"
-                    ? "Servizi di Concierge"
-                    : language === "du"
-                    ? "Concierge Services"
-                    : language === "fr"
-                    ? "Services de Conciergerie"
-                    : "Concierge Services"}
+                  
+                  Concierge Services
+                    
                 </strong>
               </Link>
             </p>
@@ -263,15 +228,7 @@ const Header = () => {
                 style={isActivePath("/") ? { color: "#0dc270" } : {}}
               >
                 <strong>
-                  {language === "en"
-                    ? "Contact Us"
-                    : language === "it"
-                    ? "Contattaci"
-                    : language === "du"
-                    ? "Contacteer Ons"
-                    : language === "fr"
-                    ? "Contactez-nous"
-                    : "Contact Us"}
+                  Contact Us
                 </strong>
               </Link>
             </p>

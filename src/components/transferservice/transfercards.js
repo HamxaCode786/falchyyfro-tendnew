@@ -6,965 +6,272 @@ import Driversv from "../../assets/images/transferpage/transfercars/Chauffer-V-C
 import Driverss from "../../assets/images/transferpage/transfercars/Chauffer-S-Class.png";
 import { TranslationContext } from "../../contextapi/translationContext";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Transfercards = () => {
   const { language } = useContext(TranslationContext);
-
-  {
-    /* For AutoFill Functionality */
-  }
   const navigate = useNavigate();
-  const handleAutoFillButtonClick = (pickup, dropoff) => {
+  const { selectedCard, setSelectedCard } = useContext(TransferContext);
+  const [isPulsing, setIsPulsing] = useState(true);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPulsing(false);
+    }, 20000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleAutoFillButtonClick = (pickup, dropoff, additionalNumber) => {
     navigate("/transferforward", {
       state: {
         pickup,
         dropoff,
+        additionalNumber,
       },
     });
   };
 
-  const { selectedCard, setSelectedCard } = useContext(TransferContext); // Destructure both selectedCard and setSelectedCard from context
-
-  const handleCardSelection = (cardData, cardImage) => {
-    console.log("Selected card:", cardData, cardImage);
-    setSelectedCard({ ...cardData, image: cardImage });
+  const handleCardSelection = (cardData) => {
+    console.log("Selected card:", cardData);
+    setSelectedCard(cardData);
   };
 
   const handleSelect = (cardId) => {
+    console.log("Selected card ID:", cardId);
     setSelectedCard(cardId);
+    navigate("/transferforward", { state: { cardId } });
   };
+
+  const [cardsData, setCardsData] = useState([]);
+
+  useEffect(() => {
+    const fetchCardsData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`https://nijaga8856.pythonanywhere.com/transfers`);
+        console.log("Received car data:", response.data);
+        const data = Array.isArray(response.data) ? response.data : [response.data];
+        setCardsData(data);
+      } catch (error) {
+        console.error("Error fetching cards data:", error);
+        setCardsData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCardsData();
+  }, []);
 
   return (
     <div>
       <h1 className="transfer_service_heading1">
-        {language === "en"
-          ? "Arrive With Grace"
-          : language === "it"
-          ? "Arriva con grazia"
-          : language === "du"
-          ? "Kom met gratie"
-          : language === "fr"
-          ? "Arrivez avec grâce"
-          : "Arrive With Grace"}
+        {loading ? <Skeleton width={200} /> : (
+          language === "en"
+            ? "Arrive With Grace"
+            : language === "it"
+            ? "Arriva con grazia"
+            : language === "du"
+            ? "Kom met gratie"
+            : language === "fr"
+            ? "Arrivez avec grâce"
+            : "Arrive With Grace"
+        )}
       </h1>
       <h1 className="transfer_service_heading2">
-        {language === "en"
-          ? "Feel the Thrill of True Elegance with Every Transfer"
-          : language === "it"
-          ? "Senti il brivido della vera eleganza in ogni trasferimento"
-          : language === "du"
-          ? "Voel de sensatie van echte elegantie bij elke overdracht"
-          : language === "fr"
-          ? "Ressentez le frisson de la vraie élégance à chaque transfert"
-          : "Feel the Thrill of True Elegance with Every Transfer"}
+        {loading ? <Skeleton width={400} /> : (
+          language === "en"
+            ? "Feel the Thrill of True Elegance with Every Transfer"
+            : language === "it"
+            ? "Senti il brivido della vera eleganza in ogni trasferimento"
+            : language === "du"
+            ? "Voel de sensatie van echte elegantie bij elke overdracht"
+            : language === "fr"
+            ? "Ressentez le frisson de la vraie élégance à chaque transfert"
+            : "Feel the Thrill of True Elegance with Every Transfer"
+        )}
       </h1>
 
       <div className="cards_div_transfer">
-        <div
-          className="card_transfer12"
-          onClick={() =>
-            handleCardSelection(
-              {
-                name: "Merceds-Benz E-Class",
-                hourlyRate: "$120",
-                color: "Super White",
-                power: "375 HP",
-                milage: "30 MPG",
-              },
-              Drivers
-            )
-          }
-        >
-          <img className="card_transfer1_img1" src={Drivers} alt="cards_1" />
-          <div className="location_cards_selectable">
-            <button
-              className="small_cards_1"
-              className={`small_cards_1 ${
-                selectedCard === 1 ? "selected" : ""
-              }`}
-              onClick={() => {
-                handleSelect(1);
-                handleAutoFillButtonClick(
-                  "Milan, Lombardy, Italy",
-                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy"
-                );
-              }}
-            >
-              {language === "en"
-                ? "Milan to Malpensa"
-                : language === "it"
-                ? "Milano a Malpensa"
-                : language === "du"
-                ? "Milaan naar Malpensa"
-                : language === "fr"
-                ? "Milan à Malpensa"
-                : "Milan to Malpensa"}
-            </button>
-            <button
-              className="small_cards_2"
-              className={`small_cards_2 ${
-                selectedCard === 2 ? "selected" : ""
-              }`}
-              onClick={() => {
-                handleSelect(2);
-                handleAutoFillButtonClick(
-                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
-                  "Lake Como, Como, Lombardy, Italy"
-                );
-              }}
-            >
-              {language === "en"
-                ? "Malpensa to Lake Como"
-                : language === "it"
-                ? "Malpensa al Lago di Como"
-                : language === "du"
-                ? "Malpensa naar Comomeer"
-                : language === "fr"
-                ? "Malpensa au lac de Côme"
-                : "Malpensa to Lake Como"}
-            </button>
-            <button
-              className="small_cards_3"
-              className={`small_cards_3 ${
-                selectedCard === 3 ? "selected" : ""
-              }`}
-              onClick={() => {
-                handleSelect(3);
-                handleAutoFillButtonClick(
-                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
-                  "Bergamo, Lombardy, Italy"
-                );
-              }}
-            >
-              {language === "en"
-                ? "Malpensa to Bergamo"
-                : language === "it"
-                ? "Malpensa a Bergamo"
-                : language === "du"
-                ? "Malpensa naar Bergamo"
-                : language === "fr"
-                ? "Malpensa à Bergame"
-                : "Malpensa to Bergamo"}
-            </button>
-          </div>
-          <h4>
-            {language === "en"
-              ? "Mercedes-Benz E-Class"
-              : language === "it"
-              ? "Mercedes-Benz E-Class"
-              : language === "du"
-              ? "Mercedes-Benz E-Klasse"
-              : language === "fr"
-              ? "Mercedes-Benz Classe E"
-              : "Mercedes-Benz E-Class"}
-          </h4>
-          <div className="cards_grey_buttons">
-            <div className="grey_button_1_d">
-              <p className="first_text1">
-                {language === "en"
-                  ? "$120"
-                  : language === "it"
-                  ? "€120"
-                  : language === "du"
-                  ? "€120"
-                  : language === "fr"
-                  ? "120€"
-                  : "$120"}
-              </p>
-              <p>
-                {language === "en"
-                  ? "Hourly Rate"
-                  : language === "it"
-                  ? "Tariffa oraria"
-                  : language === "du"
-                  ? "Uurloon"
-                  : language === "fr"
-                  ? "Taux horaire"
-                  : "Hourly Rate"}
-              </p>
-            </div>
-            <div className="grey_button_1_d">
-              <p className="first_text1">
-                {language === "en"
-                  ? "$1200"
-                  : language === "it"
-                  ? "€1200"
-                  : language === "du"
-                  ? "€1200"
-                  : language === "fr"
-                  ? "1200€"
-                  : "$1200"}
-              </p>
-              <p>
-                {language === "en"
-                  ? "Daily Rate"
-                  : language === "it"
-                  ? "Tariffa Giornaliera"
-                  : language === "du"
-                  ? "Dagprijs"
-                  : language === "fr"
-                  ? "Tarif Journalier"
-                  : "Daily Rate"}
-              </p>
-            </div>
-          </div>
-          <div className="card_specs_div">
-            <div className="icon_specs_div" style={{ gap: "15px" }}>
-              <div
-                className="testing_123"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  width: "100%",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <i
-                  className="fas fa-palette"
-                  style={{ width: "20px", textAlign: "center" }}
-                ></i>
-                <p style={{ margin: 0 }}>
-                  {language === "en"
-                    ? "Color"
-                    : language === "it"
-                    ? "Colore"
-                    : language === "du"
-                    ? "Kleur"
-                    : language === "fr"
-                    ? "Couleur"
-                    : "Color"}
-                </p>
+        {loading ? (
+          // Skeleton loading state
+          [...Array(3)].map((_, index) => (
+            <div key={index} className="card_transfer12">
+              <Skeleton height={200} width="100%" /> {/* For image */}
+              <Skeleton height={24} width={150} style={{ margin: '10px 0' }} /> {/* For car name */}
+              <div className="location_cards_selectable">
+                <Skeleton height={40} width="100%" style={{ margin: '5px 0' }} />
+                <div className="line-container">
+                  <Skeleton height={2} width="100%" />
+                </div>
+                <Skeleton height={40} width="100%" style={{ margin: '5px 0' }} />
+                <Skeleton height={40} width="100%" style={{ margin: '5px 0' }} />
+                <Skeleton height={40} width="100%" style={{ margin: '5px 0' }} />
               </div>
-              <div
-                className="testing_123"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  width: "100%",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <i
-                  className="fas fa-tachometer-alt"
-                  style={{ width: "20px", textAlign: "center" }}
-                ></i>
-                <p style={{ margin: 0 }}>
-                  {language === "en"
-                    ? "Power"
-                    : language === "it"
-                    ? "Potenza"
-                    : language === "du"
-                    ? "Kracht"
-                    : language === "fr"
-                    ? "Puissance"
-                    : "Power"}
-                </p>
-              </div>
-              <div
-                className="testing_123"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  width: "100%",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <i
-                  className="fas fa-road"
-                  style={{ width: "20px", textAlign: "center" }}
-                ></i>
-                <p style={{ margin: 0 }}>
-                  {language === "en"
-                    ? "Mileage"
-                    : language === "it"
-                    ? "Chilometraggio"
-                    : language === "du"
-                    ? "Kilometerstand"
-                    : language === "fr"
-                    ? "Kilométrage"
-                    : "Mileage"}
-                </p>
+              <div className="last_rent_now_div">
+                <Skeleton height={50} width="100%" />
               </div>
             </div>
-            <div className="icon_specs_div" style={{ gap: "15px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  width: "100%",
-                }}
-              >
-                <p
-                  className="card_specs_p1"
-                  style={{ margin: 0, textAlign: "left" }}
+          ))
+        ) : (
+          Array.isArray(cardsData) && cardsData.map((car, index) => (
+            <div
+              key={index}
+              className="card_transfer12"
+              onClick={() =>
+                handleCardSelection({
+                  id: car.id,
+                  name: car.car_name,
+                  hourlyRate: car.hourly_rate,
+                  color: car.color,
+                  power: car.power,
+                  milage: car.mileage,
+                  passengers: car.passangers,
+                  luggage: car.luggage,
+                  malpenssatomilan: car.locations.find(
+                    (location) => location.location_name === "Malpensa to milan"
+                  )?.price,
+                  malpenssatocomo: car.locations.find(
+                    (location) => location.location_name === "malpenssa to como"
+                  )?.price,
+                  malpenssatobergamo: car.locations.find(
+                    (location) => location.location_name === "malpenssa to bergamo"
+                  )?.price,
+                  image: car.car_image,
+                })
+              }
+            >
+              <img className="card_transfer1_img1" src={car.car_image} alt={`cards_${index + 1}`} />
+              
+              <h4>{car.car_name}</h4>
+              
+              <div className="location_cards_selectable">
+                <button
+                  id="hourly-rate-btn"
+                  className={`small_cards_4 ${selectedCard === 'hourly' ? "selected" : ""}`}
+                  onClick={() => handleSelect('hourly')}
                 >
                   {language === "en"
-                    ? "Super White"
+                    ? "Hourly Rate"
                     : language === "it"
-                    ? "Super Bianco"
+                    ? "Tariffa oraria"
                     : language === "du"
-                    ? "Super Wit"
+                    ? "Uurtarief"
                     : language === "fr"
-                    ? "Super Blanc"
-                    : "Super White"}
-                </p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  width: "100%",
-                }}
-              >
-                <p
-                  className="card_specs_p1"
-                  style={{ margin: 0, textAlign: "left" }}
+                    ? "Tarif horaire"
+                    : "Milan to Malpensa"}
+                  <span>€{car.hourly_rate}</span>
+                </button>
+                <div className="line-container">
+                  <div></div>
+                </div>
+                <button
+                  id="malpensa-milan-btn"
+                  className={`small_cards_1 ${selectedCard === 'malpensa-milan' ? "selected" : ""} ${isPulsing ? "pulsing" : ""}`}
+                  onClick={() => {
+                    handleSelect('malpensa-milan');
+                    handleAutoFillButtonClick(
+                      "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
+                      "Milan, Lombardy, Italy",
+                      1
+                    );
+                  }}
                 >
                   {language === "en"
-                    ? "375 HP"
+                    ? "Malpensa to Milan"
                     : language === "it"
-                    ? "375 CV"
+                    ? "Malpensa a Milano"
                     : language === "du"
-                    ? "375 pk"
+                    ? "Malpensa naar Milaan"
                     : language === "fr"
-                    ? "375 ch"
-                    : "375 HP"}
-                </p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  width: "100%",
-                }}
-              >
-                <p
-                  className="card_specs_p1"
-                  style={{ margin: 0, textAlign: "left" }}
-                >
-                  30 MPG
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="last_rent_now_div">
-            <Link to="/transferforward">
-              <h4>
-                {language === "en"
-                  ? "To Where"
-                  : language === "it"
-                  ? "Dove"
-                  : language === "du"
-                  ? "Waarheen"
-                  : language === "fr"
-                  ? "Vers où"
-                  : "To Where"}
-              </h4>
-              <h5>
-                {language === "en"
-                  ? "Custom Location"
-                  : language === "it"
-                  ? "Posizione personalizzata"
-                  : language === "du"
-                  ? "Aangepaste locatie"
-                  : language === "fr"
-                  ? "Emplacement personnalisé"
-                  : "Custom Location"}
-              </h5>
-            </Link>
-          </div>
-        </div>
-        <div
-          className="card_transfer12"
-          onClick={() =>
-            handleCardSelection(
-              {
-                name: "Mercedes-Benz V-Class",
-                hourlyRate: "$180",
-                color: "Super White",
-                power: "237 HP",
-                milage: "40 MPG",
-              },
-              Driversv
-            )
-          }
-        >
-          <img className="card_transfer1_img1" src={Driversv} alt="cards_1" />
-          <div className="location_cards_selectable">
-            <button
-              className="small_cards_1"
-              className={`small_cards_1 ${
-                selectedCard === 1 ? "selected" : ""
-              }`}
-              onClick={() => {
-                handleSelect(1);
-                handleAutoFillButtonClick(
-                  "Milan, Lombardy, Italy",
-                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy"
-                );
-              }}
-            >
-              {language === "en"
-                ? "Milan to Malpensa"
-                : language === "it"
-                ? "Milano a Malpensa"
-                : language === "du"
-                ? "Milaan naar Malpensa"
-                : language === "fr"
-                ? "Milan à Malpensa"
-                : "Milan to Malpensa"}
-            </button>
-            <button
-              className="small_cards_2"
-              className={`small_cards_2 ${
-                selectedCard === 2 ? "selected" : ""
-              }`}
-              onClick={() => {
-                handleSelect(2);
-                handleAutoFillButtonClick(
-                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
-                  "Lake Como, Como, Lombardy, Italy"
-                );
-              }}
-            >
-              {language === "en"
-                ? "Malpensa to Lake Como"
-                : language === "it"
-                ? "Malpensa al Lago di Como"
-                : language === "du"
-                ? "Malpensa naar Comomeer"
-                : language === "fr"
-                ? "Malpensa au lac de Côme"
-                : "Malpensa to Lake Como"}
-            </button>
-            <button
-              className="small_cards_3"
-              className={`small_cards_3 ${
-                selectedCard === 3 ? "selected" : ""
-              }`}
-              onClick={() => {
-                handleSelect(3);
-                handleAutoFillButtonClick(
-                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
-                  "Bergamo, Lombardy, Italy"
-                );
-              }}
-            >
-              {language === "en"
-                ? "Malpensa to Bergamo"
-                : language === "it"
-                ? "Malpensa a Bergamo"
-                : language === "du"
-                ? "Malpensa naar Bergamo"
-                : language === "fr"
-                ? "Malpensa à Bergame"
-                : "Malpensa to Bergamo"}
-            </button>
-          </div>
-          <h4>
-            {language === "en"
-              ? "Mercedes-Benz V-Class"
-              : language === "it"
-              ? "Mercedes-Benz V-Class"
-              : language === "du"
-              ? "Mercedes-Benz V-Klasse"
-              : language === "fr"
-              ? "Mercedes-Benz Classe V"
-              : "Mercedes-Benz V-Class"}
-          </h4>
-          <div className="cards_grey_buttons">
-            <div className="grey_button_1_d">
-              <p className="first_text1">$180</p>
-              <p>
-                {language === "en"
-                  ? "Hourly Rate"
-                  : language === "it"
-                  ? "Tariffa oraria"
-                  : language === "du"
-                  ? "Uurloon"
-                  : language === "fr"
-                  ? "Taux horaire"
-                  : "Hourly Rate"}
-              </p>
-            </div>
-            <div className="grey_button_1_d">
-              <p className="first_text1">$180</p>
-              <p>
-                {language === "en"
-                  ? "Daily Rate"
-                  : language === "it"
-                  ? "Tariffa Giornaliera"
-                  : language === "du"
-                  ? "Dagprijs"
-                  : language === "fr"
-                  ? "Tarif Journalier"
-                  : "Daily Rate"}
-              </p>
-            </div>
-          </div>
-          <div className="card_specs_div">
-            <div className="icon_specs_div" style={{ gap: "15px" }}>
-              <div
-                className="testing_123"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  width: "100%",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <i
-                  className="fas fa-palette"
-                  style={{ width: "20px", textAlign: "center" }}
-                ></i>
-                <p style={{ margin: 0 }}>
-                  {language === "en"
-                    ? "Color"
-                    : language === "it"
-                    ? "Colore"
-                    : language === "du"
-                    ? "Kleur"
-                    : language === "fr"
-                    ? "Couleur"
-                    : "Color"}
-                </p>
-              </div>
-              <div
-                className="testing_123"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  width: "100%",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <i
-                  className="fas fa-tachometer-alt"
-                  style={{ width: "20px", textAlign: "center" }}
-                ></i>
-                <p style={{ margin: 0 }}>
-                  {language === "en"
-                    ? "Power"
-                    : language === "it"
-                    ? "Potenza"
-                    : language === "du"
-                    ? "Kracht"
-                    : language === "fr"
-                    ? "Puissance"
-                    : "Power"}
-                </p>
-              </div>
-              <div
-                className="testing_123"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  width: "100%",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <i
-                  className="fas fa-road"
-                  style={{ width: "20px", textAlign: "center" }}
-                ></i>
-                <p style={{ margin: 0 }}>
-                  {language === "en"
-                    ? "Mileage"
-                    : language === "it"
-                    ? "Chilometraggio"
-                    : language === "du"
-                    ? "Kilometerstand"
-                    : language === "fr"
-                    ? "Kilométrage"
-                    : "Mileage"}
-                </p>
-              </div>
-            </div>
-            <div className="icon_specs_div" style={{ gap: "15px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  width: "100%",
-                }}
-              >
-                <p
-                  className="card_specs_p1"
-                  style={{ margin: 0, textAlign: "left" }}
+                    ? "Malpensa à Milan"
+                    : "Malpensa to Milan"}
+                  <span>€{car.locations.find(loc => loc.location_name === "Malpensa to milan")?.price}</span>
+                </button>
+               
+                <button
+                  id="malpensa-como-btn"
+                  className={`small_cards_2 ${selectedCard === 'malpensa-como' ? "selected" : ""}`}
+                  onClick={() => {
+                    handleSelect('malpensa-como');
+                    handleAutoFillButtonClick(
+                      "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
+                      "Lake Como, Como, Lombardy, Italy",
+                      2
+                    );
+                  }}
                 >
                   {language === "en"
-                    ? "Super White"
+                    ? "Malpensa to Lake Como"
                     : language === "it"
-                    ? "Super Bianco"
+                    ? "Malpensa al Lago di Como"
                     : language === "du"
-                    ? "Super Wit"
+                    ? "Malpensa naar Comomeer"
                     : language === "fr"
-                    ? "Super Blanc"
-                    : "Super White"}
-                </p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  width: "100%",
-                }}
-              >
-                <p
-                  className="card_specs_p1"
-                  style={{ margin: 0, textAlign: "left" }}
-                >
-                  237 HP
-                </p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  width: "100%",
-                }}
-              >
-                <p
-                  className="card_specs_p1"
-                  style={{ margin: 0, textAlign: "left" }}
-                >
-                  40 MPG
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="last_rent_now_div">
-            <Link to="/transferforward">
-              <h4>
-                {language === "en"
-                  ? "To Where"
-                  : language === "it"
-                  ? "Dove"
-                  : language === "du"
-                  ? "Waarheen"
-                  : language === "fr"
-                  ? "Vers où"
-                  : "To Where"}
-              </h4>
-              <h5>
-                {language === "en"
-                  ? "Custom Location"
-                  : language === "it"
-                  ? "Posizione personalizzata"
-                  : language === "du"
-                  ? "Aangepaste locatie"
-                  : language === "fr"
-                  ? "Emplacement personnalisé"
-                  : "Custom Location"}
-              </h5>
-            </Link>
-          </div>
-        </div>
-
-        <div
-          className="card_transfer12"
-          onClick={() =>
-            handleCardSelection(
-              {
-                name: "Mercedes-Benz S-Class",
-                hourlyRate: "$150",
-                color: "Super white",
-                power: "510 HP",
-                milage: "32 MPG",
-              },
-              Driverss
-            )
-          }
-        >
-          <img className="card_transfer1_img1" src={Driverss} alt="cards_1" />
-          <div className="location_cards_selectable">
-            <button
-              className="small_cards_1"
-              className={`small_cards_1 ${
-                selectedCard === 1 ? "selected" : ""
-              }`}
-              onClick={() => {
-                handleSelect(1);
-                handleAutoFillButtonClick(
-                  "Milan, Lombardy, Italy",
-                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy"
-                );
-              }}
-            >
-              {language === "en"
-                ? "Milan to Malpensa"
-                : language === "it"
-                ? "Milano a Malpensa"
-                : language === "du"
-                ? "Milaan naar Malpensa"
-                : language === "fr"
-                ? "Milan à Malpensa"
-                : "Milan to Malpensa"}
-            </button>
-            <button
-              className="small_cards_2"
-              className={`small_cards_2 ${
-                selectedCard === 2 ? "selected" : ""
-              }`}
-              onClick={() => {
-                handleSelect(2);
-                handleAutoFillButtonClick(
-                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
-                  "Lake Como, Como, Lombardy, Italy"
-                );
-              }}
-            >
-              {language === "en"
-                ? "Malpensa to Lake Como"
-                : language === "it"
-                ? "Malpensa al Lago di Como"
-                : language === "du"
-                ? "Malpensa naar Comomeer"
-                : language === "fr"
-                ? "Malpensa au lac de Côme"
-                : "Malpensa to Lake Como"}
-            </button>
-            <button
-              className="small_cards_3"
-              className={`small_cards_3 ${
-                selectedCard === 3 ? "selected" : ""
-              }`}
-              onClick={() => {
-                handleSelect(3);
-                handleAutoFillButtonClick(
-                  "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
-                  "Bergamo, Lombardy, Italy"
-                );
-              }}
-            >
-              {language === "en"
-                ? "Malpensa to Bergamo"
-                : language === "it"
-                ? "Malpensa a Bergamo"
-                : language === "du"
-                ? "Malpensa naar Bergamo"
-                : language === "fr"
-                ? "Malpensa à Bergame"
-                : "Malpensa to Bergamo"}
-            </button>
-          </div>
-          <h4>
-            {language === "en"
-              ? "Mercedes-Benz S-Class"
-              : language === "it"
-              ? "Mercedes-Benz S-Class"
-              : language === "du"
-              ? "Mercedes-Benz S-Klasse"
-              : language === "fr"
-              ? "Mercedes-Benz Classe S"
-              : "Mercedes-Benz S-Class"}
-          </h4>
-          <div className="cards_grey_buttons">
-            <div className="grey_button_1_d">
-              <p className="first_text1">$150</p>
-              <p>
-                {language === "en"
-                  ? "Hourly Rate"
-                  : language === "it"
-                  ? "Tariffa oraria"
-                  : language === "du"
-                  ? "Uurloon"
-                  : language === "fr"
-                  ? "Taux horaire"
-                  : "Hourly Rate"}
-              </p>
-            </div>
-            <div className="grey_button_1_d">
-              <p className="first_text1">$150</p>
-              <p>
-                {language === "en"
-                  ? "Daily Rate"
-                  : language === "it"
-                  ? "Tariffa Giornaliera"
-                  : language === "du"
-                  ? "Dagprijs"
-                  : language === "fr"
-                  ? "Tarif Journalier"
-                  : "Daily Rate"}
-              </p>
-            </div>
-          </div>
-          <div className="card_specs_div">
-            <div className="icon_specs_div" style={{ gap: "15px" }}>
-              <div
-                className="testing_123"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  width: "100%",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <i
-                  className="fas fa-palette"
-                  style={{ width: "20px", textAlign: "center" }}
-                ></i>
-                <p style={{ margin: 0 }}>
-                  {language === "en"
-                    ? "Color"
-                    : language === "it"
-                    ? "Colore"
-                    : language === "du"
-                    ? "Kleur"
-                    : language === "fr"
-                    ? "Couleur"
-                    : "Color"}
-                </p>
-              </div>
-              <div
-                className="testing_123"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  width: "100%",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <i
-                  className="fas fa-tachometer-alt"
-                  style={{ width: "20px", textAlign: "center" }}
-                ></i>
-                <p style={{ margin: 0 }}>
-                  {language === "en"
-                    ? "Power"
-                    : language === "it"
-                    ? "Potenza"
-                    : language === "du"
-                    ? "Kracht"
-                    : language === "fr"
-                    ? "Puissance"
-                    : "Power"}
-                </p>
-              </div>
-              <div
-                className="testing_123"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  width: "100%",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <i
-                  className="fas fa-road"
-                  style={{ width: "20px", textAlign: "center" }}
-                ></i>
-                <p style={{ margin: 0 }}>
-                  {language === "en"
-                    ? "Mileage"
-                    : language === "it"
-                    ? "Chilometraggio"
-                    : language === "du"
-                    ? "Kilometerstand"
-                    : language === "fr"
-                    ? "Kilométrage"
-                    : "Mileage"}
-                </p>
-              </div>
-            </div>
-            <div className="icon_specs_div" style={{ gap: "15px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  width: "100%",
-                }}
-              >
-                <p
-                  className="card_specs_p1"
-                  style={{ margin: 0, textAlign: "left" }}
+                    ? "Malpensa au lac de Côme"
+                    : "Malpensa to Lake Como"}
+                  <span>€{car.locations.find(loc => loc.location_name === "malpenssa to como")?.price}</span>
+                </button>
+                <button
+                  id="malpensa-bergamo-btn"
+                  className={`small_cards_3 ${selectedCard === 'malpensa-bergamo' ? "selected" : ""}`}
+                  onClick={() => {
+                    handleSelect('malpensa-bergamo');
+                    handleAutoFillButtonClick(
+                      "Milan-Malpensa International Airport, Via Santa Maria, Ferno, Unione dei comuni di Lonate Pozzolo e Ferno, Varese, Lombardy, 21015, Italy",
+                      "Bergamo, Lombardy, Italy",
+                      3
+                    );
+                  }}
                 >
                   {language === "en"
-                    ? "Super white"
+                    ? "Malpensa to Bergamo"
                     : language === "it"
-                    ? "Super bianco"
+                    ? "Malpensa a Bergamo"
                     : language === "du"
-                    ? "Super wit"
+                    ? "Malpensa naar Bergamo"
                     : language === "fr"
-                    ? "Super blanc"
-                    : "Super white"}
-                </p>
+                    ? "Malpensa à Bergame"
+                    : "Malpensa to Bergamo"}
+                  <span>€{car.locations.find(loc => loc.location_name === "malpenssa to bergamo")?.price}</span>
+                </button>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  width: "100%",
-                }}
-              >
-                <p
-                  className="card_specs_p1"
-                  style={{ margin: 0, textAlign: "left" }}
-                >
-                  510 HP
-                </p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  width: "100%",
-                }}
-              >
-                <p
-                  className="card_specs_p1"
-                  style={{ margin: 0, textAlign: "left" }}
-                >
-                  32 MPG
-                </p>
+              
+              <div className="last_rent_now_div">
+                <Link to="/transferforward">
+                  <h4>
+                    {language === "en"
+                      ? "To Where"
+                      : language === "it"
+                      ? "Dove"
+                      : language === "du"
+                      ? "Waarheen"
+                      : language === "fr"
+                      ? "Vers où"
+                      : "To Where"}
+                  </h4>
+                  <h5>
+                    {language === "en"
+                      ? "Custom Location"
+                      : language === "it"
+                      ? "Posizione personalizzata"
+                      : language === "du"
+                      ? "Aangepaste locatie"
+                      : language === "fr"
+                      ? "Emplacement personnalisé"
+                      : "Custom Location"}
+                  </h5>
+                </Link>
               </div>
             </div>
-          </div>
-          <div className="last_rent_now_div">
-            <Link to="/transferforward">
-              <h4>
-                {language === "en"
-                  ? "To Where"
-                  : language === "it"
-                  ? "Dove"
-                  : language === "du"
-                  ? "Waarheen"
-                  : language === "fr"
-                  ? "Vers où"
-                  : "To Where"}
-              </h4>
-              <h5>
-                {language === "en"
-                  ? "Custom Location"
-                  : language === "it"
-                  ? "Posizione personalizzata"
-                  : language === "du"
-                  ? "Aangepaste locatie"
-                  : language === "fr"
-                  ? "Emplacement personnalisé"
-                  : "Custom Location"}
-              </h5>
-            </Link>
-          </div>
-        </div>
+          ))
+        )}
       </div>
     </div>
   );

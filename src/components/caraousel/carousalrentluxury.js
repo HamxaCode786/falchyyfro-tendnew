@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
-import firstImage from "../../assets/images/caraoselImage/caraouselrentluxury/Group 52 (1)-min.png";
+import firstImage from "../../assets/images/caraoselImage/caraouselrentluxury/Group 83-min.png";
 import secondImage from "../../assets/images/caraoselImage/caraouselrentluxury/New folder/49e4e48c-6465-4cd3-add1-0afe113761c7 1-min.png";
 import thirdImage from "../../assets/images/caraoselImage/caraouselrentluxury/New folder/daniel-lincoln-67HlhGhtl2k-unsplash 1-min.png";
 import fourthImage from "../../assets/images/caraoselImage/caraouselrentluxury/New folder/Audi Interior 1-min.png";

@@ -11,7 +11,7 @@ const Rentluxury = () => {
       <Caraouselluxury />
       <Luxury />
       <Customcars />
-      <Contactcard2 />
+      
     </div>
   );
 };

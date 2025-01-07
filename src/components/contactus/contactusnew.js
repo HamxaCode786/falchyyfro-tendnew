@@ -1,206 +1,288 @@
-import React from "react";
-import { MDBInput } from "mdb-react-ui-kit";
-import { MDBTextArea } from "mdb-react-ui-kit";
+import React, { useState, useContext } from "react";
+import { MDBInput, MDBTextArea } from "mdb-react-ui-kit";
 import Aboutusheading from "../aboutus/contactpicture";
-import Testimonial from "../homepage/testimonail";
-import Carroussel from "./slider";
-import Card from "./card";
-import CardNews from "./CardNews";
-import { v4 as uuidv4 } from "uuid";
 import { TranslationContext } from "../../contextapi/translationContext";
-import { useContext } from "react";
-
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Contactusnew = () => {
   const { language } = useContext(TranslationContext);
-  
 
-  let cards = [
-    {
-      key: uuidv4(),
-      content: <CardNews />
-    },
-    {
-      key: uuidv4(),
-      content: <CardNews />
-    },
-    {
-      key: uuidv4(),
-      content: <CardNews />
-    },
-    {
-      key: uuidv4(),
-      content: <CardNews />
-    },
-    {
-      key: uuidv4(),
-      content: <CardNews />
-    },
-    {
-      key: uuidv4(),
-      content: <CardNews />
-    },
-    {
-      key: uuidv4(),
-      content: <CardNews />
+  // State to handle form inputs and validation errors
+  const [formData, setFormData] = useState({
+    email: "",
+    name: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState({
+    email: "",
+    name: "", 
+    message: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Clear error when user starts typing
+    setErrors(prev => ({
+      ...prev,
+      [name]: ""
+    }));
+  };
+
+  // Form validation function
+  const validateForm = () => {
+    let formErrors = { email: "", name: "", message: "" };
+    let isValid = true;
+
+    // Validate Email
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!formData.email) {
+      formErrors.email = "Email is required";
+      isValid = false;
+    } else if (!emailPattern.test(formData.email)) {
+      formErrors.email = "Please enter a valid email address";
+      isValid = false;
     }
-  ];
 
+    // Validate Name
+    if (!formData.name) {
+      formErrors.name = "Name is required";
+      isValid = false;
+    }
+
+    // Validate Message
+    if (!formData.message) {
+      formErrors.message = "Message is required";
+      isValid = false;
+    }
+
+    setErrors(formErrors);
+    return isValid;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      setIsSubmitting(true);
+
+      try {
+        await axios.post(`${process.env.REACT_APP_API_URL}/transfers/contact`, formData);
+
+        // Reset form data after successful submission
+        setFormData({ email: "", name: "", message: "" });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Your Contact Information Has Been Noted. Our Team Will Act As Per Your Requirements!",
+          iconColor: "#05021f",
+          confirmButtonColor: "#05021f",
+          customClass: {
+            popup: "swal-popup-custom",
+            confirmButton: "swal-button-custom",
+          },
+        });
+
+      } catch (error) {
+        console.error("Error submitting form", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "There was an error. Please try again.",
+          iconColor: "#05021f",
+          iconColor: "#05021f",
+          confirmButtonColor: "#05021f",
+          customClass: {
+            popup: "swal-popup-custom",
+            confirmButton: "swal-button-custom",
+          },
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
+    }
+  };
 
   return (
     <div>
-<Aboutusheading />
+      <Aboutusheading />
       <div className="componantourt_di1">
-      <div className="new_component_contact1">
+        <div className="new_component_contact1">
+          <h3 className="new_contact_heading">
+            {language === "en"
+              ? "Any Question or Remarks? Just Write Us A Message!"
+              : language === "it"
+              ? "Qualche domanda o osservazione? Scrivici un messaggio!"
+              : language === "du"
+              ? "Heb je vragen of opmerkingen? Stuur ons een bericht!"
+              : language === "fr"
+              ? "Des questions ou des remarques ? Écrivez-nous un message!"
+              : "Any Question or Remarks? Just Write Us A Message!"}
+          </h3>
+          <form onSubmit={handleSubmit}>
+            <div className="first_feilds_new">
+              <div className="form-outline">
+                <MDBInput
+                  label={
+                    language === "en"
+                      ? "Email"
+                      : language === "it"
+                      ? "Email"
+                      : language === "du"
+                      ? "E-mail"
+                      : language === "fr"
+                      ? "E-mail"
+                      : "Email"
+                  }
+                  id="formControlDefault1"
+                  type="text"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={`form-control new1122 ${errors.email ? 'is-invalid' : ''}`}
+                  style={{
+                    opacity: 0.6,
+                    backgroundColor: "#dae4e8 !important",
+                    borderColor: errors.email ? '#dc3545' : ''
+                  }}
+                />
+                {errors.email && <div className="error" style={{color: '#dc3545'}}>{errors.email}</div>}
+              </div>
 
-        <h3 className="new_contact_heading">
-        {language === "en" 
-  ? "Any Question or Remarks? Just Write Us A Message!" 
-  : language === "it" 
-  ? "Qualche domanda o osservazione? Scrivici un messaggio!" 
-  : language === "du"  // Using 'du' for Dutch as you requested
-  ? "Heb je vragen of opmerkingen? Stuur ons een bericht!" 
-  : language === "fr" 
-  ? "Des questions ou des remarques ? Écrivez-nous un message !" 
-  : "Any Question or Remarks? Just Write Us A Message!"}
-
-        </h3>
-        <div className="first_feilds_new">
-          <div className="form-outline">
-          <MDBInput
-   label={language === "en" 
-    ? "Email" 
-    : language === "it" 
-    ? "Email" // In Italian, "Email" is often used, but you can use "Posta elettronica" if you prefer
-    : language === "du"  // Dutch translation
-    ? "E-mail"
-    : language === "fr" 
-    ? "E-mail" 
-    : "Email"}
-  id="formControlDefault1"
-  type="text"
-  className="form-control new1122"
-  style={{
-    opacity: 0.6, // Set the opacity to 0.6 for the entire element
-     // Correct the border definition
-    backgroundColor: "#dae4e8 !important", // Ensure backgroundColor is applied with !important
-  }}
-/>
-
-          </div>
-
-          <div className="form-outline">
-            <MDBInput
-               label={language === "en" 
-                ? "Name" 
-                : language === "it" 
-                ? "Nome" 
-                : language === "du"  // Dutch translation (using 'du')
-                ? "Naam" 
-                : language === "fr" 
-                ? "Nom" 
-                : "Name"}
+              <div className="form-outline">
+                <MDBInput
+                  label={
+                    language === "en"
+                      ? "Name"
+                      : language === "it"
+                      ? "Nome"
+                      : language === "du"
+                      ? "Naam"
+                      : language === "fr"
+                      ? "Nom"
+                      : "Name"
+                  }
+                  id="formControlDefault2"
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className={`form-control new1122 ${errors.name ? 'is-invalid' : ''}`}
+                  style={{ 
+                    opacity: 0.6,
+                    borderColor: errors.name ? '#dc3545' : '' 
+                  }}
+                />
+                {errors.name && <div className="error" style={{color: '#dc3545'}}>{errors.name}</div>}
+              </div>
+            </div>
+            <MDBTextArea
+              label={
+                language === "en"
+                  ? "Message"
+                  : language === "it"
+                  ? "Messaggio"
+                  : language === "du"
+                  ? "Bericht"
+                  : language === "fr"
+                  ? "Message"
+                  : "Message"
+              }
               id="formControlDefault2"
-              type="text"
-              className="form-control new1122"
-              style={{ opacity: 0.6 }}
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
+              rows={4}
+              className={`form-control new1122 ${errors.message ? 'is-invalid' : ''}`}
+              style={{ 
+                opacity: 0.6,
+                borderColor: errors.message ? '#dc3545' : '' 
+              }}
             />
-          </div>
+            {errors.message && <div className="error" style={{color: '#dc3545'}}>{errors.message}</div>}
+
+            <button className="button_send_us_new" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : language === "en"
+                ? "Send"
+                : language === "it"
+                ? "Invia"
+                : language === "du"
+                ? "Verzenden"
+                : language === "fr"
+                ? "Envoyer"
+                : "Send"}
+            </button>
+          </form>
+
+          <div></div>
         </div>
-        <MDBTextArea
-          label={language === "en" 
-            ? "Message" 
-            : language === "it" 
-            ? "Messaggio" 
-            : language === "du"  // Dutch translation (using 'du')
-            ? "Bericht" 
-            : language === "fr" 
-            ? "Message" 
-            : "Message"}
-          id="formControlDefault2"
-          rows={4} // You can adjust the number of rows for the height of the textarea
-          className="form-control new1122"
-          style={{ opacity: 0.6 }}
-        />
-
-        <button className="button_send_us_new">{language === "en" 
-  ? "Send" 
-  : language === "it" 
-  ? "Invia" 
-  : language === "du"  // Dutch translation (using 'du')
-  ? "Verzenden" 
-  : language === "fr" 
-  ? "Envoyer" 
-  : "Send"}
-</button>
-
-        <div></div>
-      </div>
       </div>
       <div className="below_form_component">
         <div className="first_logo_details">
-          <div class="icon-container">
-            <i class="fa-solid fa-location-dot"></i>
+          <div className="icon-container">
+            <i className="fa-solid fa-location-dot"></i>
           </div>
-          <h4 className="font_heading_new">{language === "en" 
-  ? "Find Us" 
-  : language === "it" 
-  ? "Trova noi" 
-  : language === "du"  // Dutch translation (using 'du')
-  ? "Vind ons" 
-  : language === "fr" 
-  ? "Trouvez-nous" 
-  : "Find Us"}
-</h4>
+          <h4 className="font_heading_new">
+            {language === "en"
+              ? "Find Us"
+              : language === "it"
+              ? "Trova noi"
+              : language === "du"
+              ? "Vind ons"
+              : language === "fr"
+              ? "Trouvez-nous"
+              : "Find Us"}
+          </h4>
           <h5>Plazza Gino Valle, 20149 MI, Italy</h5>
           <h5>Plazza Gino Valle, 20149 MI, Italy</h5>
         </div>
 
         <div className="first_logo_details">
-          <div class="icon-container">
-          <i class="fas fa-phone-alt"></i>
+          <div className="icon-container">
+            <i className="fas fa-phone-alt"></i>
           </div>
-          <h4 className="font_heading_new" >{language === "en" 
-  ? "Call Us" 
-  : language === "it" 
-  ? "Chiamaci" 
-  : language === "du"  // Dutch translation (using 'du')
-  ? "Bel ons" 
-  : language === "fr" 
-  ? "Appelez-nous" 
-  : "Call Us"}
-</h4>
+          <h4 className="font_heading_new">
+            {language === "en"
+              ? "Call Us"
+              : language === "it"
+              ? "Chiamaci"
+              : language === "du"
+              ? "Bel ons"
+              : language === "fr"
+              ? "Appelez-nous"
+              : "Call Us"}
+          </h4>
           <h5>+1 123-456-7890</h5>
           <h5>+1 123-456-7890</h5>
         </div>
         <div className="first_logo_details">
-          <div class="icon-container">
-          <i class="fas fa-envelope"></i>
+          <div className="icon-container">
+            <i className="fas fa-envelope"></i>
           </div>
-          <h4 className="font_heading_new" >{language === "en" 
-  ? "Mail Us" 
-  : language === "it" 
-  ? "Inviaci una mail" 
-  : language === "du"  // Dutch translation (using 'du')
-  ? "Stuur ons een e-mail" 
-  : language === "fr" 
-  ? "Envoyez-nous un e-mail" 
-  : "Mail Us"}
-</h4>
+          <h4 className="font_heading_new">
+            {language === "en"
+              ? "Mail Us"
+              : language === "it"
+              ? "Inviaci una mail"
+              : language === "du"
+              ? "Stuur ons een e-mail"
+              : language === "fr"
+              ? "Envoyez-nous un e-mail"
+              : "Mail Us"}
+          </h4>
           <h5>contact@falchy.com</h5>
           <h5>+1 123-456-7890</h5>
         </div>
       </div>
-      <Testimonial/>
-      <Carroussel
-        cards={cards}
-        height="600px"
-        width="100%"
-        margin="0 auto"
-        backgroundColor="#081736"
-        offset={2}
-        showArrows={false}
-      />
     </div>
   );
 };

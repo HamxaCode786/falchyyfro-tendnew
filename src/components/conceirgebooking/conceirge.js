@@ -15,6 +15,11 @@ import Dining1 from '../../assets/images/Dining&/Armani-hotel-milan-min.png'
 import Dining2 from '../../assets/images/Dining&/Four-Season-Dining-min.png'
 import Dining3 from '../../assets/images/Dining&/Grand-Hotel-min.png'
 import Dining4 from '../../assets/images/Dining&/Villa-Deste-min.png'
+import lifestyle from '../../assets/images/caraoselImage/lifestyleexpereinces&conferences/Conferences-Banner_Image-min.png'
+import lifestyle2 from '../../assets/images/caraoselImage/lifestyleexpereinces&conferences/Milan-Gallery-min.png'
+import lifestyle3 from '../../assets/images/caraoselImage/lifestyleexpereinces&conferences/Seravalle-Outlet-min.png'
+import Relax1 from '../../assets/images/caraoselImage/relaxation/Armani-Spa-Image-min.png'
+import Relax2 from '../../assets/images/caraoselImage/relaxation/Palazzo Parigi Hotel Milan-min.png'
 import { TranslationContext } from "../../contextapi/translationContext";
 import { useContext } from "react";
 
@@ -184,7 +189,7 @@ const Conceirge = () => {
         du: "Je pad naar ontspanning begint hier – Vul het formulier in en ontspan!",
         fr: "Votre chemin vers la relaxation commence ici – Remplissez le formulaire et détendez-vous !",
       },
-      image: [image2, image1, image3, image4],
+      image: [image2, Relax1, Relax2, image4],
       description: {
         en: "Rejuvenate your body and mind with our premium wellness services. Access top spas, personal trainers, beauty treatments, and holistic health experiences. Our carefully selected wellness partners provide transformative treatments, from traditional therapies to cutting-edge beauty technologies. Enjoy personalized fitness sessions, meditation classes, and rejuvenating spa treatments delivered by industry-leading professionals in luxurious settings.",
         it: "Ringiovanisci il corpo e la mente con i nostri servizi di benessere premium. Accedi alle migliori spa, personal trainer, trattamenti di bellezza e esperienze di salute olistica. I nostri partner di benessere selezionati con cura offrono trattamenti trasformativi, dalle terapie tradizionali alle tecnologie di bellezza all'avanguardia. Goditi sessioni di fitness personalizzate, lezioni di meditazione e trattamenti spa ringiovanenti offerti da professionisti di settore in ambienti lussuosi.",
@@ -258,93 +263,7 @@ const Conceirge = () => {
         },
       ],
     },
-    {
-      title: {
-        en: "Conferences",
-        it: "Conferenze",
-        du: "Conferenties",
-        fr: "Conférences",
-      },
-      title2: {
-        en: "Transform Your Event into a Masterpiece – We’re Here to Guide You!",
-        it: "Trasforma il tuo evento in un capolavoro – Siamo qui per guidarti!",
-        du: "Transformeer je evenement in een meesterwerk – Wij zijn hier om je te begeleiden!",
-        fr: "Transformez votre événement en chef-d'œuvre – Nous sommes là pour vous guider !",
-      },
-      image: [image3, image2, image4, image1],
-      description: {
-        en: "Let us handle your corporate and social events with precision. From venue selection to full-service event planning, we ensure flawless execution. Our experienced event coordinators manage every aspect, including catering, decor, entertainment, and technical requirements. Whether it's an intimate gathering or a large-scale conference, we deliver exceptional events that exceed expectations and leave lasting impressions.",
-        it: "Lasciaci gestire i tuoi eventi aziendali e sociali con precisione. Dalla selezione della location alla pianificazione completa dell'evento, garantiamo un'esecuzione impeccabile. I nostri esperti coordinatori di eventi gestiscono ogni aspetto, inclusi catering, decorazioni, intrattenimento e requisiti tecnici. Che si tratti di un incontro intimo o di una conferenza su larga scala, organizziamo eventi eccezionali che superano le aspettative e lasciano un'impressione duratura.",
-        du: "Laat ons je zakelijke en sociale evenementen met precisie regelen. Van locatiekeuze tot volledige evenementplanning, wij zorgen voor een vlekkeloze uitvoering. Onze ervaren evenementcoördinatoren beheren elk aspect, inclusief catering, decoratie, entertainment en technische vereisten. Of het nu gaat om een intieme bijeenkomst of een grootschalige conferentie, wij leveren uitzonderlijke evenementen die de verwachtingen overtreffen en een blijvende indruk achterlaten.",
-        fr: "Laissez-nous gérer vos événements professionnels et sociaux avec précision. De la sélection du lieu à la planification d'événements tout-en-un, nous garantissons une exécution parfaite. Nos coordinateurs d'événements expérimentés gèrent chaque aspect, y compris le catering, la décoration, le divertissement et les exigences techniques. Que ce soit pour un rassemblement intime ou une conférence à grande échelle, nous organisons des événements exceptionnels qui dépassent les attentes et laissent une impression durable.",
-      },
-      icons1: [
-        {
-          icon: "fa-solid fa-bottle-water",
-          text: {
-            en: "Water Bottle",
-            it: "Bottiglia d'acqua",
-            du: "Waterfles",
-            fr: "Bouteille d'eau",
-          },
-        },
-        {
-          icon: "fa-wifi",
-          text: { en: "Wifi", it: "Wifi", du: "Wifi", fr: "Wifi" },
-        },
-        {
-          icon: "fa-car",
-          text: {
-            en: "Luxury Transportation",
-            it: "Trasporti di lusso",
-            du: "Luxe Vervoer",
-            fr: "Transport de luxe",
-          },
-        },
-        {
-          icon: "fa-gem",
-          text: { en: "Luxury", it: "Lusso", du: "Luxe", fr: "Luxe" },
-        },
-      ],
-      icons2: [
-        {
-          icon: "fa-chair",
-          text: {
-            en: "Seating",
-            it: "Posti a sedere",
-            du: "Zitplaatsen",
-            fr: "Sièges",
-          },
-        },
-        {
-          icon: "fa-video",
-          text: {
-            en: "Video Setup",
-            it: "Setup Video",
-            du: "Video Setup",
-            fr: "Configuration Vidéo",
-          },
-        },
-        {
-          icon: "fa-clipboard-list",
-          text: {
-            en: "Registration",
-            it: "Registrazione",
-            du: "Registratie",
-            fr: "Inscription",
-          },
-        },
-        {
-          icon: "fa-coffee",
-          text: {
-            en: "Catering",
-            it: "Catering",
-            du: "Catering",
-            fr: "Restauration",
-          },
-        },
-      ],
-    },
+    
     {
       title: {
         en: "Travel and Accommodation",
@@ -434,10 +353,10 @@ const Conceirge = () => {
     },
     {
       title: {
-        en: "Lifestyle & Experiences",
-        it: "Stile di Vita e Esperienze",
-        du: "Levensstijl en Ervaringen",
-        fr: "Style de Vie & Expériences",
+        en: "Lifestyle Experiences & Conferences",
+        it: "Stile di Vita, Esperienze e Conferenze",
+        du: "Levensstijl, Ervaringen en Conferenties",
+        fr: "Style de Vie, Expériences et Conférences",
       },
       title2: {
         en: "Streamline Your Life with Excellence – Let’s Create the Perfect Experience for You!",
@@ -445,7 +364,7 @@ const Conceirge = () => {
         du: "Stroomlijn je leven met uitmuntendheid – Laten we de perfecte ervaring voor jou creëren!",
         fr: "Rationalisez votre vie avec excellence – Créons l'expérience parfaite pour vous !",
       },
-      image: [image5, image3, image1, image2],
+      image: [image5, lifestyle, lifestyle2, lifestyle3],
       description: {
         en: "Simplify your life with our comprehensive lifestyle management services. From personal shopping to home management, we take care of every detail. Our dedicated team handles everything from wardrobe curation and gift procurement to household maintenance and administrative tasks. We provide proactive solutions and personalized attention to ensure your lifestyle runs smoothly and efficiently.",
         it: "Semplifica la tua vita con i nostri servizi completi di gestione dello stile di vita. Dallo shopping personale alla gestione della casa, ci occupiamo di ogni dettaglio. Il nostro team dedicato gestisce tutto, dalla cura del guardaroba e l'acquisto dei regali alla manutenzione domestica e le attività amministrative. Offriamo soluzioni proattive e attenzione personalizzata per garantire che il tuo stile di vita proceda senza intoppi ed efficientemente.",
@@ -519,93 +438,7 @@ const Conceirge = () => {
         },
       ],
     },
-    {
-      title: {
-        en: "Professional Services",
-        it: "Servizi Professionali",
-        du: "Professionele Diensten",
-        fr: "Services Professionnels",
-      },
-      title2: {
-        en: "Effortless Luxury, Expertly Crafted – Your Ultimate Travel Adventure Starts Here!",
-        it: "Lusso senza sforzo, creato con maestria – La tua avventura di viaggio definitiva inizia qui!",
-        du: "Moeiteloze luxe, vakkundig gecreëerd – Jouw ultieme reisavontuur begint hier!",
-        fr: "Luxe sans effort, conçu avec expertise – Votre aventure de voyage ultime commence ici!",
-      },
-      image: [image6, image1, image3, image2],
-      description: {
-        en: "Let us orchestrate your travel needs with precision. From luxury transportation to exclusive excursions, we create seamless travel experiences. Our travel specialists arrange private jets, luxury vehicles, and yacht charters while crafting bespoke itineraries that showcase the best destinations. We handle all logistics, including VIP airport services, custom tours, and last-minute changes to ensure stress-free, memorable journeys.",
-        it: "Lasciaci orchestrare le tue esigenze di viaggio con precisione. Dal trasporto di lusso alle escursioni esclusive, creiamo esperienze di viaggio senza soluzione di continuità. I nostri specialisti di viaggio organizzano jet privati, veicoli di lusso e charter di yacht, mentre creano itinerari su misura che mostrano le migliori destinazioni. Gestiamo tutta la logistica, inclusi i servizi VIP per l'aeroporto, i tour personalizzati e le modifiche dell'ultimo minuto per garantire viaggi senza stress e indimenticabili.",
-        du: "Laat ons je reisbehoeften met precisie orkestreren. Van luxe vervoer tot exclusieve excursies, wij creëren naadloze reiservaringen. Onze reisspecialisten regelen privéjets, luxe voertuigen en jachtcharters, terwijl ze op maat gemaakte reisroutes samenstellen die de beste bestemmingen laten zien. Wij regelen alle logistiek, inclusief VIP-luchthavenshulp, op maat gemaakte rondleidingen en last-minute wijzigingen om stressvrije, gedenkwaardige reizen te garanderen.",
-        fr: "Laissez-nous orchestrer vos besoins de voyage avec précision. Du transport de luxe aux excursions exclusives, nous créons des expériences de voyage sans faille. Nos spécialistes du voyage organisent des jets privés, des véhicules de luxe et des locations de yachts tout en élaborant des itinéraires sur mesure mettant en valeur les meilleures destinations. Nous gérons toute la logistique, y compris les services VIP à l'aéroport, les visites personnalisées et les changements de dernière minute pour garantir des voyages sans stress et mémorables.",
-      },
-      icons1: [
-        {
-          icon: "fa-solid fa-bottle-water",
-          text: {
-            en: "Water Bottle",
-            it: "Bottiglia d'acqua",
-            du: "Waterfles",
-            fr: "Bouteille d'eau",
-          },
-        },
-        {
-          icon: "fa-wifi",
-          text: { en: "Wifi", it: "Wifi", du: "Wifi", fr: "Wifi" },
-        },
-        {
-          icon: "fa-car",
-          text: {
-            en: "Luxury Transportation",
-            it: "Trasporti di lusso",
-            du: "Luxe Vervoer",
-            fr: "Transport de luxe",
-          },
-        },
-        {
-          icon: "fa-gem",
-          text: { en: "Luxury", it: "Lusso", du: "Luxe", fr: "Luxe" },
-        },
-      ],
-      icons2: [
-        {
-          icon: "fa-passport",
-          text: {
-            en: "VIP Airport Services",
-            it: "Servizi VIP per Aeroporti",
-            du: "VIP Luchthavenservice",
-            fr: "Services VIP Aéroport",
-          },
-        },
-        {
-          icon: "fa-route",
-          text: {
-            en: "Travel Planning",
-            it: "Pianificazione Viaggi",
-            du: "Reisplanning",
-            fr: "Planification de Voyage",
-          },
-        },
-        {
-          icon: "fa-calendar-check",
-          text: {
-            en: "Itinerary Management",
-            it: "Gestione Itinerari",
-            du: "Reisroutebeheer",
-            fr: "Gestion des Itinéraires",
-          },
-        },
-        {
-          icon: "fa-concierge-bell",
-          text: {
-            en: "24/7 Assistance",
-            it: "Assistenza 24/7",
-            du: "24/7 Assistentie",
-            fr: "Assistance 24/7",
-          },
-        },
-      ],
-    },
+    
   ];
 
   return (
@@ -632,12 +465,12 @@ const Conceirge = () => {
 
       <div className="tailored_container">
         <div className="first_row1">
-          {cardDetails.slice(0, 3).map((card, index) => (
+          {cardDetails.slice(0, 2).map((card, index) => (
             <CardComponent key={index} data={card} />
           ))}
         </div>
         <div className="second_row1">
-          {cardDetails.slice(3).map((card, index) => (
+          {cardDetails.slice(2).map((card, index) => (
             <CardComponent key={index + 3} data={card} />
           ))}
         </div>

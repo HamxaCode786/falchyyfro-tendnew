@@ -67,15 +67,16 @@
 .footer_div1 button {
   width: 168px;
   background-color: #05021f;
-  padding-right: 25px;
-  padding-left: 25px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   border-radius: 2px !important;
   border: none;
   color: #e0e0e0 !important;
   font-size: 16px;
   font-weight: 600 !important;
+  border-radius: 3px;
 
   /* Box shadow for bottom and right */
 }
@@ -94,7 +95,7 @@
 
 .icons_div1 {
   position: absolute;
-  bottom: 0; /* Aligns the div to the bottom of the parent */
+  bottom: 15px; /* Aligns the div to the bottom of the parent */
   left: 0; /* Optional: Aligns it to the left of the parent */
   width: 100%; /* Optional: Makes the div span the full width of the parent */
   text-align: center;

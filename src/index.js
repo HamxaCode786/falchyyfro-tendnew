@@ -7,10 +7,12 @@ import { TransferProvider } from "./contextapi/transferservicecontext";
 import './i18n';
 import TranslationProvider from './contextapi/translationContext';
 import SelectedCardProvider from '../src/contextapi/rentluxurycontext'; // Import the context provide
-import { ScrollProvider } from '../src/contextapi/scrollContext'; 
+import { ScrollProvider } from '../src/contextapi/scrollContext';
+import { CardProvider } from '../src/contextapi/cardcontext'; 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <CardProvider>
   <ScrollProvider>
   <TranslationProvider>
     <SelectedCardProvider>
@@ -22,6 +24,7 @@ root.render(
     </SelectedCardProvider>
     </TranslationProvider>
     </ScrollProvider>
+  </CardProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

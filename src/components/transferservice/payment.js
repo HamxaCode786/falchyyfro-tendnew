@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_blue.css";
@@ -6,94 +6,434 @@ import Autosuggest from "react-autosuggest";
 import { MDBInput } from "mdb-react-ui-kit";
 import { TranslationContext } from "../../contextapi/translationContext";
 import { useContext } from "react";
+import Swal from "sweetalert2";
+import { MDBCheckbox } from 'mdb-react-ui-kit';
+import axios from 'axios';
+import { GoogleMap, LoadScript, DirectionsService, DirectionsRenderer, Marker } from '@react-google-maps/api';
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBCardText,
+  MDBCardHeader,
+  
+} from 'mdb-react-ui-kit';
+import Skeleton from "react-loading-skeleton";
+import { useNavigate } from "react-router-dom";
+
+const MapComponent = ({ origin, destination, initialState }) => {
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [map, setMap] = useState(null);
+  
+  
+  useEffect(() => {
+    if (origin && destination) {
+      console.log('Origin:', origin);
+      console.log('Destination:', destination);
+
+      const calculateRoute = async () => {
+        try {
+          const directionsService = new window.google.maps.DirectionsService();
+          const results = await directionsService.route({
+            origin,
+            destination,
+            travelMode: window.google.maps.TravelMode.DRIVING,
+          });
+          setDirectionsResponse(results);
+          
+          if (map) {
+            const bounds = new window.google.maps.LatLngBounds();
+            bounds.extend(origin);
+            bounds.extend(destination);
+            map.fitBounds(bounds);
+          }
+
+           // Set loading to false once directions are fetched
+        } catch (error) {
+          console.error("Error fetching directions", error);
+        }
+      };
+
+      calculateRoute();
+    }
+  }, [origin, destination, map, initialState]);
+
+  return (
+    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+    <GoogleMap
+      mapContainerStyle={{ width: '100%', height: '200px' }}
+      zoom={10}
+      center={origin}
+      onLoad={(mapInstance) => setMap(mapInstance)}
+    >
+      {/* Marker for Pickup */}
+      <Marker className="marker_origin" 
+        position={origin} 
+        // Directly using a string for label
+      />
+      
+      {/* Marker for Dropoff */}
+      <Marker 
+        position={destination} 
+         // Directly using a string for label
+      />
+      
+      {/* Directions Renderer */}
+      {directionsResponse && (
+        <DirectionsRenderer directions={directionsResponse} />
+      )}
+    </GoogleMap>
+  </LoadScript>
+  );
+};
 
 const Payment = ({ selectedCard, initialState }) => {
   const { language } = useContext(TranslationContext);
+  const [isTransitionComplete, setIsTransitionComplete] = useState(false);
+  const [distanceInfo, setDistanceInfo] = useState(null);
+  const [showRouteInfo, setShowRouteInfo] = useState(false);
+
+  // Handle transition end
+  const handleTransitionEnd = () => {
+    setIsTransitionComplete(true); // Set state to true when the transition ends
+  };
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     contact: "",
-    paymentMethod: "",
-    accountNumber: "",
-    expirationDate: null,
-    cvc: "",
     pickupDate: null,
     numberOfPersons: "",
     pickupLocation: initialState.pickup || "",
     dropOffLocation: initialState.dropoff || "",
     luggageQuantity: "",
+    checkbox: false,
+    checkbox2: false, // Added for terms acceptance
+    ageOfChild: "", // Added for child age
+    numberofchild: "" // Added for number of children
   });
 
+const isPickupEditable = !initialState.pickup;
+const isDropoffEditable = !initialState.dropoff;
+
+
+  const [errors, setErrors] = useState({});
   const [pickupSuggestions, setPickupSuggestions] = useState([]);
   const [dropOffSuggestions, setDropOffSuggestions] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Calculate distance between two locations
+  const calculateDistance = async (origin, destination, initialState) => {
+    if (!origin || !destination) {
+      console.log("Origin or destination missing");
+      setShowRouteInfo(false);
+      return;
+    }
+
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/transfers/distance`, {
+        params: {
+          origins: origin,
+          destinations: destination,
+        },
+      });
+    
+
+      // Check if the response contains data
+      if (!response?.data) {
+        console.error("Invalid response:", response);
+        throw new Error("Invalid response from distance API");
+      }
+
+      // Process and store the distance and duration info
+      const info = {
+        distance: response.data.distance,
+        duration: response.data.duration,
+        status:response.data.milan
+      };
+
+      setDistanceInfo(info);
+      setShowRouteInfo(true);
+      return info;
+    } catch (error) {
+      console.error("Error calculating distance:", error.message);
+      setDistanceInfo(null);
+      setShowRouteInfo(false);
+      throw error;
+    }
+  };                                                                                                                                                                                                                                                                                                                                              
+
+  // Effect to trigger when pickup or dropOff changes
+  useEffect(() => {
+    if (initialState?.pickup && initialState?.dropoff) {
+      console.log("Initial State Pickup:", initialState?.pickup);
+      console.log("Initial State DropOff:", initialState?.dropoff);
+  
+      calculateDistance(initialState?.pickup, initialState?.dropoff);
+    }
+  }, []);  // Empty dependency array to run once on component mount
+  
+
+  const validateForm = () => {
+    const newErrors = {};
+    const errorMessages = [];
+
+    if (!formData.fullName.trim()) {
+      errorMessages.push("Full name is required");
+    }
+
+    if (!formData.email.trim()) {
+      errorMessages.push("Email is required");
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errorMessages.push("Email is invalid");
+    }
+
+    if (!formData.contact.trim()) {
+      errorMessages.push("Contact number is required");
+    } else if (!/^\+?[\d\s-]{8,}$/.test(formData.contact)) {
+      errorMessages.push("Invalid contact number");
+    }
+
+    if (!formData.pickupDate) {
+      errorMessages.push("Pickup date is required");
+    }
+
+    if (!formData.numberOfPersons) {
+      errorMessages.push("Number of persons is required");
+    }
+
+    if (!formData.pickupLocation.trim()) {
+      errorMessages.push("Pickup location is required");
+    }
+
+    if (!formData.dropOffLocation.trim()) {
+      errorMessages.push("Drop off location is required");
+    }
+
+    if (!formData.luggageQuantity) {
+      errorMessages.push("Luggage quantity is required");
+    }
+
+    if (errorMessages.length > 0) {
+      Swal.fire({
+        icon: "error",
+        title:
+          language === "en"
+            ? "Incomplete Fields"
+            : language === "it"
+            ? "Campi Incompleti"
+            : language === "fr"
+            ? "Champs Incomplets"
+            : language === "du"
+            ? "Ingevulde Velden"
+            : "Incomplete Fields",
+
+        text:
+          language === "en"
+            ? "Please fill all fields"
+            : language === "it"
+            ? "Compila tutti i campi"
+            : language === "fr"
+            ? "Veuillez remplir tous les champs"
+            : language === "du"
+            ? "Vul alle velden in"
+            : "Please fill all fields",
+
+        iconColor: "#05021f",
+        confirmButtonColor: "#05021f",
+        customClass: {
+          popup: "swal-popup-custom",
+          confirmButton: "swal-button-custom",
+        },
+        confirmButtonText:
+          language === "en"
+            ? "Ok"
+            : language === "it"
+            ? "Ok"
+            : language === "fr"
+            ? "D'accord"
+            : language === "du"
+            ? "Ok"
+            : "Ok",
+      });
+
+      return false;
+    }
+
+    return true;
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    const { name, checked, value, type } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
   };
-
+  
   const handleDateChange = (date, name) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: date[0],
-    });
+    }));
   };
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    // Calculate distance between pickup and dropoff l
+    // ocations
+    const distanceInfo = await calculateDistance(
+      formData.pickupLocation,
+      formData.dropOffLocation
+    );
+
+    // Get payment amount based on route
+    const payment_amount = initialState?.additionalNumber === 1
+  ? (selectedCard?.malpenssatomilan ? selectedCard.malpenssatomilan.toString().replace(/[€$]/g, '') : '0')
+  : initialState?.additionalNumber === 2
+  ? (selectedCard?.malpenssatocomo ? selectedCard.malpenssatocomo.toString().replace(/[€$]/g, '') : '0')
+  : initialState?.additionalNumber === 3
+  ? (selectedCard?.malpenssatobergamo ? selectedCard.malpenssatobergamo.toString().replace(/[€$]/g, '') : '0')
+  : (selectedCard?.hourlyRate ? selectedCard.hourlyRate.toString().replace(/[€$]/g, '') : '0');
+
+
+    // Prepare data with child age and number - set to "none" if checkbox not selected
+    const submissionData = {
+      full_name: formData.fullName,
+      email: formData.email, 
+      phone_number: formData.contact,
+      pick_up_location: formData.pickupLocation,
+      drop_off_location: formData.dropOffLocation,
+      number_of_persons: formData.numberOfPersons,
+      luggage_quantity: formData.luggageQuantity,
+      car: selectedCard.id,
+      pickup_date_time: formData.pickupDate,
+      age_of_child: formData.ageOfChild || "none",
+      no_of_child_seats: formData.numberofchild || "none",
+      payment_amount: payment_amount,
+      distance: distanceInfo?.distance || "Unknown",
+      estimated_duration: distanceInfo?.duration || "Unknown",
+      need_a_child_seat: formData.checkbox,
+      
+    };
+
     try {
-      // Simulating API call
-      const response = await fetch("https://api.example.com/payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/transfers/transfer-bookings`, submissionData);
+
+      // Reset form on success
+      setFormData({
+        fullName: "",
+        email: "",
+        contact: "",
+        pickupDate: null,
+        numberOfPersons: "",
+        pickupLocation: "",
+        dropOffLocation: "", 
+        luggageQuantity: "",
+        checkbox: false,
+        ageOfChild: "",
+        numberofchild: ""
       });
 
-      if (response.ok) {
-        alert("Payment information submitted successfully!");
-        // Reset form
-        setFormData({
-          fullName: "",
-          email: "",
-          contact: "",
-          paymentMethod: "",
-          accountNumber: "",
-          expirationDate: null,
-          cvc: "",
-          pickupDate: null,
-          numberOfPersons: "",
-          pickupLocation: "",
-          dropOffLocation: "",
-          luggageQuantity: "",
-        });
-      } else {
-        alert("Failed to submit payment information");
-      }
+      Swal.fire({
+        icon: "success",
+        title:
+          language === "en"
+            ? "Success!"
+            : language === "it"
+            ? "Successo!"
+            : language === "fr"
+            ? "Succès!"
+            : language === "du"
+            ? "Succes!"
+            : "Success!",
+
+        text:
+          language === "en"
+            ? "Thank You For Reaching Out, Our team will Get in touch with you Shortly!"
+            : language === "it"
+            ? "Grazie per averci contattato, il nostro team ti contatterà a breve!"
+            : language === "fr"
+            ? "Merci de nous avoir contacté, notre équipe vous contactera sous peu!"
+            : language === "du"
+            ? "Dank je voor het contact opnemen, ons team neemt binnenkort contact met je op!"
+            : "Thank You For Reaching Out, Our team will Get in touch with you Shortly!",
+
+        iconColor: "#05021f",
+        confirmButtonColor: "#05021f",
+        customClass: {
+          popup: "swal-popup-custom",
+          confirmButton: "swal-button-custom",
+        },
+      });
+
+      navigate("/transferservice");
+
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred while submitting payment information");
+      console.error("Error submitting payment:", error);
+      Swal.fire({
+        icon: "error",
+        title:
+          language === "en"
+            ? "Error!"
+            : language === "it"
+            ? "Errore!"
+            : language === "fr"
+            ? "Erreur!"
+            : language === "du"
+            ? "Fout!"
+            : "Error!",
+
+        text:
+          language === "en"
+            ? "Failed to submit information. Please try again later."
+            : language === "it"
+            ? "Impossibile inviare le informazioni. Riprova più tardi."
+            : language === "fr"
+            ? "Échec de l'envoi des informations. Veuillez réessayer plus tard."
+            : language === "du"
+            ? "Het verzenden van informatie is mislukt. Probeer het later opnieuw."
+            : "Failed to submit information. Please try again later.",
+
+        iconColor: "#05021f",
+        confirmButtonColor: "#05021f",
+        customClass: {
+          popup: "swal-popup-custom",
+          confirmButton: "swal-button-custom",
+        },
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const fetchSuggestions = async (value) => {
     if (!value) return [];
+  
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/transfers/autocomplete/?input=${encodeURIComponent(value)}`);
 
-    const response = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${value}&limit=5`
-    );
-    const data = await response.json();
-    return data.map((place) => ({
-      description: place.display_name,
-      latitude: place.lat,
-      longitude: place.lon,
-    }));
+      if (!response.ok) {
+        throw new Error("Failed to fetch location suggestions");
+      }
+  
+      const data = await response.json();
+      return data.predictions?.map((place) => ({
+        description: place.description,
+        latitude: place.latitude,
+        longitude: place.longitude,
+      })) || [];
+    } catch (error) {
+      console.error("Error fetching suggestions:", error);
+      return [];
+    }
   };
+  
 
   const handleSuggestionsFetchRequested = async ({ value }, field) => {
     const suggestions = await fetchSuggestions(value);
@@ -104,34 +444,36 @@ const Payment = ({ selectedCard, initialState }) => {
     }
   };
 
-  // Handle selection of suggestion
-  const handleSuggestionSelected = (
-    event,
-    { suggestion, suggestionValue, sectionIndex, method },
-    field
-  ) => {
+  const handleSuggestionSelected = async (event, { suggestion }, field) => {
     const { description } = suggestion;
-    setFormData({
+    const updatedFormData = {
       ...formData,
-      [field]: description,
-    });
+      [field]: description
+    };
+    
+    setFormData(updatedFormData);
+
+    // Calculate distance when both locations are set
+    if (updatedFormData.pickupLocation && updatedFormData.dropOffLocation) {
+      await calculateDistance(updatedFormData.pickupLocation, updatedFormData.dropOffLocation);
+    }
   };
 
   return (
     <div className="payment_form">
       <h3 className="transfer_service_heading_form">
         {language === "en"
-          ? "Arrive with grace, leave an impression, luxury transfer redefined"
+          ? "Fill out the form and book your transfer"
           : language === "it"
-          ? "Arriva con grazia, lascia un'impressione, trasferimento di lusso ridefinito"
+          ? "Compila il modulo e prenota il tuo trasferimento"
           : language === "du"
-          ? "Arrive with grace, leave an impression, luxury transfer redefined" // Dutch (same as English)
+          ? "Vul het formulier in en boek je transfer"
           : language === "fr"
-          ? "Arrivez avec grâce, laissez une impression, transfert de luxe redéfini"
-          : "Arrive with grace, leave an impression, luxury transfer redefined"}
+          ? "Remplissez le formulaire et réservez votre transfert"
+          : "Fill out the form and book your transfer"}
       </h3>
 
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} noValidate>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <MDBInput
             label={
@@ -152,7 +494,7 @@ const Payment = ({ selectedCard, initialState }) => {
             style={{
               backgroundColor: "#f9f9f9",
               border: "none",
-              fontWeight: 600,
+              
               fontSize: "16px",
               padding: "10px",
             }}
@@ -179,7 +521,7 @@ const Payment = ({ selectedCard, initialState }) => {
             style={{
               backgroundColor: "#f9f9f9",
               border: "none",
-              fontWeight: 600,
+              
               fontSize: "16px",
               padding: "10px",
             }}
@@ -206,102 +548,13 @@ const Payment = ({ selectedCard, initialState }) => {
             style={{
               backgroundColor: "#f9f9f9",
               border: "none",
-              fontWeight: 600,
+              
               fontSize: "16px",
               padding: "10px",
             }}
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <MDBInput
-            label={
-              language === "en"
-                ? "Account Number"
-                : language === "it"
-                ? "Numero di conto"
-                : language === "du"
-                ? "Rekeningnummer"
-                : language === "fr"
-                ? "Numéro de compte"
-                : "Account Number"
-            }
-            type="text"
-            name="accountNumber"
-            value={formData.accountNumber}
-            onChange={handleInputChange}
-            style={{
-              backgroundColor: "#f9f9f9",
-              border: "none",
-              fontWeight: 600,
-              fontSize: "16px",
-              padding: "10px",
-            }}
-          />
-        </Form.Group>
-
-        <div className="last_div">
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <MDBInput
-              label={
-                language === "en"
-                  ? "Expiration Date"
-                  : language === "it"
-                  ? "Data di scadenza"
-                  : language === "du"
-                  ? "Vervaldatum"
-                  : language === "fr"
-                  ? "Date d'expiration"
-                  : "Expiration Date"
-              }
-              type="text"
-              name="expirationDate"
-              value={formData.expirationDate}
-              onChange={handleInputChange}
-              as={Flatpickr}
-              options={{
-                enableTime: false,
-                dateFormat: "F j, Y",
-                defaultDate: formData.expirationDate,
-              }}
-              style={{
-                backgroundColor: "#f9f9f9",
-                border: "none",
-                fontWeight: 600,
-                fontSize: "16px",
-                padding: "10px",
-                width: "100%",
-              }}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <MDBInput
-              label={
-                language === "en"
-                  ? "Enter Your CVC"
-                  : language === "it"
-                  ? "Inserisci il tuo CVC"
-                  : language === "du"
-                  ? "Voer je CVC in"
-                  : language === "fr"
-                  ? "Entrez votre CVC"
-                  : "Enter Your CVC"
-              }
-              type="text"
-              name="cvc"
-              value={formData.cvc}
-              onChange={handleInputChange}
-              style={{
-                backgroundColor: "#f9f9f9",
-                border: "none",
-                fontWeight: 600,
-                fontSize: "16px",
-                padding: "10px",
-              }}
-            />
-          </Form.Group>
-        </div>
         <div className="last_div">
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <MDBInput
@@ -316,14 +569,14 @@ const Payment = ({ selectedCard, initialState }) => {
                   ? "Nombre de Personnes"
                   : "Number of Persons"
               }
-              type="number"
+             type="text"
               name="numberOfPersons"
               value={formData.numberOfPersons}
               onChange={handleInputChange}
               style={{
                 backgroundColor: "#f9f9f9",
                 border: "none",
-                fontWeight: 600,
+                color:"black",
                 fontSize: "16px",
                 padding: "10px",
               }}
@@ -331,63 +584,65 @@ const Payment = ({ selectedCard, initialState }) => {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formPickupDate">
-            <div style={{ position: "relative" }}>
-              {/* Floating Label */}
-              <label
-                htmlFor="pickupDate"
-                style={{
-                  position: "absolute",
-                  backgroundColor: "#f9f9f9",
-                  top: formData.pickupDate ? "-10px" : "50%",
-                  left: "10px",
-                  transform: formData.pickupDate ? "none" : "translateY(-50%)",
-                  fontSize: formData.pickupDate ? "12px" : "16px", // Dynamic font size
-                  color: formData.pickupDate ? "#495057" : "#6c757d", // Color based on state
-                  transition: "all 0.3s ease", // Smooth transition for floating effect
-                  pointerEvents: "none",
-                  background: "#fff", // Prevent overlap with input content
-                  padding: "0 5px", // Padding around the label text
-                  zIndex: 1, // Ensure it stays above the input field
-                }}
-              >
-                Pickup Date
-              </label>
+  <div style={{ position: "relative" }}>
+  <label
+            htmlFor="pickupDate"
+            style={{
+              position: "absolute",
+              backgroundColor:
+                formData.pickupDate ? "#ffffff" : "transparent", // Set to white during transition and then transparent
+              top: formData.pickupDate ? "-10px" : "50%", // Position adjustment
+              left: "10px",
+              transform: formData.pickupDate ? "none" : "translateY(-50%)", // Apply translation for vertical centering
+              fontSize: formData.pickupDate ? "12px" : "16px",
+              color: formData.pickupDate ? "#3f51b5" : "#6c757d", // Color change based on state
+              transition: "all 0.3s ease", // Smooth transition for all changes
+              pointerEvents: "none",
+              padding: "0 5px",
+              zIndex: 1,
+            }}
+            onTransitionEnd={handleTransitionEnd} // Listen for the transition end
+          >
+            Pickup Date & Time
+          </label>
 
-              {/* Flatpickr Input */}
-              <Flatpickr
-                className="form-control"
-                name="pickupDate"
-                value={formData.pickupDate}
-                onChange={(date) => handleDateChange(date, "pickupDate")}
-                options={{
-                  dateFormat: "F j, Y",
-                  minDate: "today",
-                  disableMobile: true,
-                }}
-                style={{
-                  backgroundColor: "#f9f9f9",
-                  border: "1px solid #ced4da", // Border with MDBInput-like styling
-                  borderRadius: "5px", // Smooth rounded corners
-                  padding: "10px", // Padding to maintain height and spacing
-                  paddingTop: "18px", // Extra padding to accommodate floating label
-                  fontWeight: 400, // Lighter font weight for a sleek look
-                  fontSize: "16px", // Standard font size for MDBInput
-                  height: "45px", // Fixed height for consistency
-                  color: "#495057", // Default text color
-                  outline: "none", // Remove default outline
-                  transition: "border-color 0.3s, box-shadow 0.3s", // Smooth hover and focus effects
-                  boxShadow: "none", // No shadow initially
-                }}
-                onFocus={(e) =>
-                  (e.target.style.boxShadow = "0 0 5px rgba(0, 123, 255, 0.5)")
-                }
-                onBlur={(e) => (e.target.style.boxShadow = "none")}
-              />
-            </div>
-          </Form.Group>
+
+
+    <Flatpickr
+      className="form-control"
+      name="pickupDate"
+      value={formData.pickupDate}
+      onChange={(date) => handleDateChange(date, "pickupDate")}
+      options={{
+        dateFormat: "F j, Y h:i K", // Format: "Month Day, Year Hour:Minute AM/PM"
+        minDate: "today",
+        disableMobile: true,
+        enableTime: true, // Enable time picker
+        noCalendar: false, // Ensure the calendar is not disabled
+        time_24hr: false, // Use 12-hour format (false for AM/PM, true for 24-hour)
+        defaultHour: 12, // Default hour to show in the time picker
+        defaultMinute: 0, // Default minute to show in the time picker
+      }}
+      style={{
+        backgroundColor: "#f9f9f9",
+        border: "1px solid #bdbdbd",
+        borderRadius: "5px",
+        padding: "10px",
+        paddingTop: "18px",
+        fontWeight: 400,
+        fontSize: "16px",
+        height: "45px",
+        color: "#495057",
+        outline: "none",
+        transition: "border-color 0.3s, box-shadow 0.3s",
+        boxShadow: "none",
+      }}
+    />
+  </div>
+</Form.Group>
+
         </div>
         <div className="last_div">
-          {/* Drop Off Location */}
           <Form.Group className="mb-3" controlId="formDropOffLocation">
             <Autosuggest
               suggestions={dropOffSuggestions}
@@ -399,7 +654,9 @@ const Payment = ({ selectedCard, initialState }) => {
               renderSuggestion={(suggestion) => (
                 <div>{suggestion.description}</div>
               )}
-              onSuggestionSelected={handleSuggestionSelected}
+              onSuggestionSelected={(e, data) =>
+                handleSuggestionSelected(e, data, "dropOffLocation")
+              }
               inputProps={{
                 value: formData.dropOffLocation,
                 onChange: handleInputChange,
@@ -409,17 +666,19 @@ const Payment = ({ selectedCard, initialState }) => {
                 label: "Drop Off Location",
                 style: {
                   backgroundColor: "#f9f9f9",
-                  fontWeight: 600,
+                  color:"black",
                   fontSize: "16px",
                   padding: "10px",
                   width: "100%",
-                  color: "#575b62",
+                  
                   borderRadius: "10px",
+                  border: "none",
                 },
+                disabled: !isDropoffEditable,
               }}
               renderInputComponent={(inputProps) => (
                 <MDBInput
-                  {...inputProps} // Pass down all the inputProps to MDBInput
+                  {...inputProps}
                   className="form-outline form-control autosuggest_drop"
                 />
               )}
@@ -447,11 +706,13 @@ const Payment = ({ selectedCard, initialState }) => {
                 suggestionHighlighted: {
                   backgroundColor: "#d3d3d3",
                 },
+                
               }}
+              disabled={!isDropoffEditable}
             />
+            
           </Form.Group>
 
-          {/* Pickup Location */}
           <Form.Group className="mb-3" controlId="formPickupLocation">
             <Autosuggest
               suggestions={pickupSuggestions}
@@ -468,31 +729,32 @@ const Payment = ({ selectedCard, initialState }) => {
                 onChange: handleInputChange,
                 name: "pickupLocation",
                 label: "Pickup Location",
+                className: "form-outline form-control",
                 style: {
                   backgroundColor: "#f9f9f9",
                   border: "none",
-                  fontWeight: 600,
+                  
                   fontSize: "16px",
                   padding: "10px",
                   width: "100%",
-                  color: "#34434d", // Text color
-                  borderRadius: "10px", // Apply border radius
+                  color: "black",
+                  borderRadius: "10px",
                 },
+                disabled:!isPickupEditable,
               }}
               onSuggestionSelected={(e, data) =>
                 handleSuggestionSelected(e, data, "pickupLocation")
               }
               renderInputComponent={(inputProps) => (
                 <MDBInput
-                  {...inputProps} // Pass down all the inputProps to MDBInput
+                  {...inputProps}
                   className="form-outline form-control"
-                  // You can add more class names if needed
                 />
               )}
               theme={{
                 container: {
                   position: "relative",
-                  zIndex: 1050, // Ensure suggestions overlay without disturbing other UI elements
+                  zIndex: 1050,
                 },
                 suggestionsContainerOpen: {
                   position: "absolute",
@@ -514,130 +776,99 @@ const Payment = ({ selectedCard, initialState }) => {
                   backgroundColor: "#d3d3d3",
                 },
               }}
+              disabled={!isPickupEditable}
             />
           </Form.Group>
         </div>
+
+        {showRouteInfo && (
+          <MDBCard className="" style={{ marginTop: '10px', display: 'block', backgroundColor:"rgb(249, 249, 249)", marginBottom:"30px", border:"1px solid", borderColor:"#bdbdbd", borderRadius:"5px"  }}>
+            <MDBCardHeader className="text" style={{ textAlign: 'center', fontWeight:"700", fontSize:"22px" }}>Route Information</MDBCardHeader>
+            <MapComponent origin={formData.pickupLocation} destination={formData.dropOffLocation} />
+            <MDBCardBody>
+              <div className="d-flex justify-content-between">
+                <div>
+                  <strong>Distance:</strong  ><span style={{fontWeight:700}}> {distanceInfo?.distance || 'N/A'}</span>
+                </div>
+                <div>
+                  <strong>Duration:</strong><span style={{fontWeight:700}}> {distanceInfo?.duration || 'N/A'}</span>
+                </div>
+              </div>
+              
+            </MDBCardBody>
+          </MDBCard>
+        )}
+
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <MDBInput
             label="Luggage Quantity"
-            type="number"
+           type="text"
             name="luggageQuantity"
             value={formData.luggageQuantity}
             onChange={handleInputChange}
             style={{
               backgroundColor: "#f9f9f9",
               border: "none",
-              fontWeight: 600,
+              color:"black",
               fontSize: "16px",
               padding: "10px",
             }}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicRadio">
-          <div
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+      <MDBCheckbox
+        label="Need a Child Seat?"
+        name="checkbox"
+        checked={formData.checkbox}
+        onChange={handleInputChange}
+        style={{
+          fontWeight: 600,
+          fontSize: "16px",
+        }}
+      />
+    </Form.Group>
+    
+    <div className={`child-seat-container ${formData.checkbox ? 'show' : ''}`}>
+        {formData.checkbox && (
+          <MDBInput
+            label="Age of Child"
+            type="text"
+            name="ageOfChild"
+            value={formData.ageOfChild}
+            onChange={handleInputChange}
             style={{
-              marginBottom: "10px",
-              paddingLeft: "15px",
-              border: "1px solid #ced4da",
-              borderRadius: "5px",
               backgroundColor: "#f9f9f9",
+              border: "none",
+              color:"black",
+              fontSize: "16px",
+              padding: "10px",
+              marginBottom:"17px",
+              marginTop:"6px",
+              // Add some spacing
             }}
-          >
-            <div
-              style={{
-                marginBottom: "10px",
-                color: "#585b5e",
-                fontWeight: 600,
-                textAlign: "center",
-                paddingTop: "5px",
-              }}
-            >
-              Choose Your Payment Method
-            </div>
-            <Form.Check
-              className="radio_payment"
-              type="radio"
-              name="paymentMethod"
-              id="visa"
-              value="visa"
-              label={
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="55" // Adjust the size as needed
-                    height="55" // Adjust the size as needed
-                    viewBox="0 60 780 780" // Keep the original viewBox if necessary
-                    style={{ marginRight: "8px" }}
-                  >
-                    <path
-                      d="m293.2 348.73l33.359-195.76h53.358l-33.384 195.76h-53.333zm246.11-191.54c-10.569-3.966-27.135-8.222-47.821-8.222-52.726 0-89.863 26.551-90.181 64.604-0.297 28.129 26.515 43.822 46.754 53.185 20.771 9.598 27.752 15.716 27.652 24.283-0.133 13.123-16.586 19.115-31.924 19.115-21.355 0-32.701-2.967-50.225-10.273l-6.878-3.111-7.487 43.822c12.463 5.467 35.508 10.199 59.438 10.445 56.09 0 92.502-26.248 92.916-66.885 0.199-22.27-14.016-39.215-44.801-53.188-18.65-9.056-30.072-15.099-29.951-24.269 0-8.137 9.668-16.838 30.56-16.838 17.446-0.271 30.088 3.534 39.936 7.5l4.781 2.259 7.231-42.427m137.31-4.223h-41.23c-12.772 0-22.332 3.486-27.94 16.234l-79.245 179.4h56.031s9.159-24.121 11.231-29.418c6.123 0 60.555 0.084 68.336 0.084 1.596 6.854 6.492 29.334 6.492 29.334h49.512l-43.187-195.64zm-65.417 126.41c4.414-11.279 21.26-54.724 21.26-54.724-0.314 0.521 4.381-11.334 7.074-18.684l3.606 16.878s10.217 46.729 12.353 56.527h-44.293v3e-3zm-363.3-126.41l-52.239 133.5-5.565-27.129c-9.726-31.274-40.025-65.157-73.898-82.12l47.767 171.2 56.455-0.063 84.004-195.39-56.524-1e-3"
-                      fill="#0E4595" // Blue color
-                    />
-                    <path
-                      d="m146.92 152.96h-86.041l-0.682 4.073c66.939 16.204 111.23 55.363 129.62 102.42l-18.709-89.96c-3.229-12.396-12.597-16.096-24.186-16.528"
-                      fill="#F2AE14" // Yellow color
-                    />
-                  </svg>
-                </span>
-              }
-              style={{
-                color: "#1B1B1B",
-                marginBottom: "8px",
-                padding: "10px 0 10px 30px", // Added more padding on the left
-                backgroundColor: "#f9f9f9",
-              }}
-              onChange={handleInputChange}
-            />
-            <Form.Check
-              className="radio_payment"
-              type="radio"
-              name="paymentMethod"
-              id="mastercard"
-              value="mastercard"
-              label={
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="40" // Adjust the size as needed
-                    height="40" // Adjust the size as needed
-                    viewBox="0 120 495 495" // Adjusted to match the viewBox from the Mastercard SVG
-                    style={{ marginLeft: "8px" }}
-                  >
-                    <g>
-                      <path
-                        style={{ fill: "#2488FF" }} // Blue color
-                        d="M247.471,314.297C233.009,325.682,214.791,332.5,195,332.5c-46.869,0-85-38.131-85-85
-        s38.131-85,85-85c19.791,0,38.009,6.818,52.471,18.203c0.029-0.023,0.029-91.372,0.029-91.372H0v316.338h247.5
-        C247.5,405.669,247.5,314.32,247.471,314.297z"
-                      />
-                      <path
-                        style={{ fill: "#005ECE" }} // Dark blue color
-                        d="M247.5,89.331v91.348c14.867-11.681,33.332-18.179,52.5-18.179c46.869,0,85,38.131,85,85
-        s-38.131,85-85,85c-19.168,0-37.633-6.499-52.5-18.18v91.349H495V89.331H247.5z"
-                      />
-                      <path
-                        style={{ fill: "#FFCD00" }} // Yellow color
-                        d="M280,247.5c0,27.078-12.742,51.22-32.529,66.797C262.367,326.001,280.832,332.5,300,332.5
-        c46.869,0,85-38.131,85-85s-38.131-85-85-85c-19.168,0-37.633,6.499-52.5,18.179C267.257,196.279,280,220.422,280,247.5z"
-                      />
-                      <path
-                        style={{ fill: "#FF5023" }} // Red color
-                        d="M280,247.5c0-27.078-12.743-51.221-32.529-66.797C233.009,169.318,214.791,162.5,195,162.5
-        c-46.869,0-85,38.131-85,85s38.131,85,85,85c19.791,0,38.009-6.818,52.471-18.203C267.258,298.72,280,274.578,280,247.5z"
-                      />
-                    </g>
-                  </svg>
-                </span>
-              }
-              style={{
-                color: "#1B1B1B",
-                padding: "10px 0 10px 30px", // Added more padding on the left
-                backgroundColor: "#f9f9f9",
-              }}
-              onChange={handleInputChange}
-            />
-          </div>
-        </Form.Group>
+          />
+          
+        )}
+        {formData.checkbox && (
+          <MDBInput
+            label="Number of Child"
+            type="text"
+            name="numberofchild"
+            value={formData.numberofchild}
+            onChange={handleInputChange}
+            style={{
+              backgroundColor: "#f9f9f9",
+              border: "none",
+              color:"black",
+              fontSize: "16px",
+              padding: "10px",
+              marginBottom:"17px"
+              // Add some spacing
+            }}
+          />
+          
+        )}
+      </div>
         <Form.Group
           className="mb-3"
           controlId="formBasicEmail"
@@ -646,13 +877,132 @@ const Payment = ({ selectedCard, initialState }) => {
           <MDBInput
             type="number"
             name="Amount"
-            placeholder={`Price: ${selectedCard.hourlyRate}/hr`}
-            value={selectedCard.hourlyRate}
+            placeholder={`Price: ${
+              console.log('distanceInfo.milan:', distanceInfo),
+            
+              // Check if distanceInfo has a status of "true"
+              distanceInfo?.status === true
+                ? '€80'  // Set price to 80 with Euro symbol when status is "true"
+                : // If distance is available and valid, calculate price based on distance
+                distanceInfo?.distance && !isNaN(parseFloat(distanceInfo.distance))
+                ? (() => {
+                    // Skip price calculation for selectedCard.malpenssatomilan, malpenssatocomo, malpenssatobergamo
+                    if (
+                      initialState.additionalNumber === 1 || 
+                      initialState.additionalNumber === 2 || 
+                      initialState.additionalNumber === 3
+                    ) {
+                      // Return the corresponding price from selectedCard for 1, 2, or 3 with Euro symbol
+                      return `€${initialState.additionalNumber === 1
+                        ? selectedCard.malpenssatomilan
+                        : initialState.additionalNumber === 2
+                        ? selectedCard.malpenssatocomo
+                        : selectedCard.malpenssatobergamo
+                      }`;  // Return the appropriate price with Euro symbol
+                    }
+            
+                    // Remove " km" and parse the number
+                    const distanceValue = parseFloat(distanceInfo.distance.replace(' km', ''));
+                    const calculatedPrice = Math.max(distanceValue * 5, 60);
+                    console.log("distanceInfo.distance:", distanceInfo.distance);
+                    console.log("distance value after removing 'km':", distanceValue);
+                    console.log("calculated price:", calculatedPrice);
+                    return `€${calculatedPrice}`;  // Return calculated price with Euro symbol
+                  })()
+                : // If additionalNumber is 1, 2, or 3, use selectedCard's corresponding price without calculating
+                initialState.additionalNumber === 1
+                ? `€${selectedCard.malpenssatomilan}`  // Return selectedCard.malpenssatomilan price with Euro symbol
+                : initialState.additionalNumber === 2
+                ? `€${selectedCard.malpenssatocomo}`  // Return selectedCard.malpenssatocomo price with Euro symbol
+                : initialState.additionalNumber === 3
+                ? `€${selectedCard.malpenssatobergamo}`  // Return selectedCard.malpenssatobergamo price with Euro symbol
+                : `€${selectedCard.hourlyRate}`  // Return selectedCard hourlyRate price with Euro symbol
+            }`}
+             
+            
+            value={ 
+              distanceInfo?.distance && !isNaN(parseFloat(distanceInfo.distance))
+                ? (() => {
+                    // Check if distanceInfo.status is "true", set calculatedPrice to 80
+                    if (distanceInfo?.status === true) {
+                      console.log("distanceInfo.status is 'true', setting price to 80");
+                      return '€80';  // Return 80 with Euro symbol when status is "true"
+                    }
+            
+                    // Skip calculation for selectedCard.malpenssatomilan, malpenssatocomo, malpenssatobergamo
+                    if (
+                      initialState.additionalNumber === 1 || 
+                      initialState.additionalNumber === 2 || 
+                      initialState.additionalNumber === 3
+                    ) {
+                      // Return the corresponding price from selectedCard for 1, 2, or 3
+                      return initialState.additionalNumber === 1
+                        ? `€${selectedCard.malpenssatomilan}`  // Add Euro sign
+                        : initialState.additionalNumber === 2
+                        ? `€${selectedCard.malpenssatocomo}`  // Add Euro sign
+                        : `€${selectedCard.malpenssatobergamo}`;  // Add Euro sign
+                    }
+            
+                    // Remove " km" and parse the number
+                    const distanceValue = parseFloat(distanceInfo.distance.replace(' km', ''));
+                    const calculatedPrice = Math.max(distanceValue * 5, 60);
+                    console.log("distanceInfo.distance:", distanceInfo.distance);
+                    console.log("distance value after removing 'km':", distanceValue);
+                    console.log("calculated price:", calculatedPrice);
+                    return `€${calculatedPrice}`;  // Add Euro sign to calculated price
+                  })()
+                : // If additionalNumber is 1, 2, or 3, use selectedCard's corresponding price without calculating
+                initialState.additionalNumber === 1
+                ? `€${selectedCard.malpenssatomilan}`  // Add Euro sign
+                : initialState.additionalNumber === 2
+                ? `€${selectedCard.malpenssatocomo}`  // Add Euro sign
+                : initialState.additionalNumber === 3
+                ? `€${selectedCard.malpenssatobergamo}`  // Add Euro sign
+                : `€${selectedCard.hourlyRate}`  // Add Euro sign to hourly rate
+            }
+            
+            
             readOnly
           />
         </Form.Group>
-        <button type="submit" className="payment_button">
-          Get a quote
+        <div className="terms_conditions_cards">
+      <MDBCard className="card_background" alignment="center">
+        <MDBCardHeader style={{ textAlign: "left", paddingLeft: "30px", fontWeight: "700" }}>
+          Terms & Conditions
+        </MDBCardHeader>
+        <MDBCardBody>
+          <MDBCardText>
+            <ul style={{ listStyleType: "disc", paddingLeft: "20px", textAlign: "left" }}>
+              <li>The minimum fare for a transfer is 60 euros. All rides within the city of Milan are charged at a flat rate of 80 euros.</li>
+              <li>Each hour includes 15 km of travel. Any additional kilometers will incur a charge of 2.3 euros per kilometer, or 2.1 euros per kilometer if the ride is not at an airport.</li>
+              <li>Users have the option to add multiple stops during their journey for an additional fee of 10 euros per stop.</li>
+              <li>The driver will wait for up to 1-2 hours after the scheduled flight arrival time to accommodate any delays.</li>
+            </ul>
+          </MDBCardText>
+          
+          {/* Checkbox for accepting terms */}
+          <div style={{ textAlign: "left" }}>
+            <MDBCheckbox
+              name="checkbox2"
+              label="I accept the Terms & Conditions"
+              checked={formData.checkbox2}
+              onChange={handleInputChange}
+            />
+          </div>
+        </MDBCardBody>
+      </MDBCard>
+    </div>
+
+        <button 
+          type="submit" 
+          className="payment_button"
+          disabled={!formData.checkbox2 || isSubmitting}
+          style={{
+            opacity: formData.checkbox2 && !isSubmitting ? 1 : 0.5,
+            cursor: formData.checkbox2 && !isSubmitting ? 'pointer' : 'not-allowed'
+          }}
+        >
+          {isSubmitting ? "Submitting..." : "Get a quote"}
         </button>
       </Form>
     </div>
