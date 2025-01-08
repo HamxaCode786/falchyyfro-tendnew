@@ -9,6 +9,7 @@ const Footer = () => {
   const { language } = useContext(TranslationContext);
 
   return (
+    
     <div className="footer_main_container">
       <div className="footer_main_div">
         {/* <div
@@ -108,13 +109,14 @@ const Footer = () => {
                 Contact Us
               </h1>
               <div
-                style={{ display: "flex", alignItems: "baseline", gap: "15px" }}
+              className="footer_mobile_responsive"
+                style={{ display: "flex", alignItems: "baseline", gap: "15px", textAlign:"left" }}
               >
                 <i
                   className="fas fa-map-marker-alt"
                   style={{ fontSize: "20px", color: "#05021F" }}
                 ></i>
-                <p>123 Business Street, City, Country</p>
+                <p>CASSANO MAGNAGO (VA) VIA FORO SAN MARTINO 22 CAP 21012</p>
               </div>
               <div
                 style={{ display: "flex", alignItems: "baseline", gap: "15px" }}
@@ -132,7 +134,7 @@ const Footer = () => {
                   className="fas fa-phone"
                   style={{ fontSize: "20px", color: "#05021F" }}
                 ></i>
-                <p>+1 234 567 8900</p>
+                <p>(+39) 375 911 9255</p>
               </div>
               <div
                 style={{ display: "flex", alignItems: "baseline", gap: "15px" }}
@@ -147,7 +149,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      {/* <div className="footer_copyright">
+      <div className="footer_copyright">
         {language === "en" ? (
           <h3>Copyright © 2024 FALCHY - All Rights Reserved.</h3>
         ) : language === "it" ? (
@@ -159,8 +161,10 @@ const Footer = () => {
         ) : (
           <h3>Copyright © 2024 FALCHY - All Rights Reserved.</h3>
         )}
-      </div> */}
+      </div>
     </div>
+    
+    
   );
 };
 

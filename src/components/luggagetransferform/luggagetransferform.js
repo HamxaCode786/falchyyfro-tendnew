@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
-import { MDBInput } from "mdb-react-ui-kit";
 import { TranslationContext } from "../../contextapi/translationContext";
 import { useContext } from "react";
 import Autosuggest from "react-autosuggest";

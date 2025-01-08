@@ -119,6 +119,7 @@ const isDropoffEditable = !initialState.dropoff;
   const [pickupSuggestions, setPickupSuggestions] = useState([]);
   const [dropOffSuggestions, setDropOffSuggestions] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   // Calculate distance between two locations
   const calculateDistance = async (origin, destination, initialState) => {
@@ -459,6 +460,14 @@ const isDropoffEditable = !initialState.dropoff;
     }
   };
 
+  const handleCalendarOpen = () => {
+    setIsCalendarOpen(true); // Set state when the calendar is open
+  };
+
+  const handleCalendarClose = () => {
+    setIsCalendarOpen(false); // Set state when the calendar is closed
+  };
+
   return (
     <div className="payment_form">
       <h3 className="transfer_service_heading_form">
@@ -584,18 +593,17 @@ const isDropoffEditable = !initialState.dropoff;
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formPickupDate">
-  <div style={{ position: "relative" }}>
+  <div className="form-outline" style={{ position: "relative" }}>
   <label
             htmlFor="pickupDate"
             style={{
               position: "absolute",
-              backgroundColor:
-                formData.pickupDate ? "#ffffff" : "transparent", // Set to white during transition and then transparent
-              top: formData.pickupDate ? "-10px" : "50%", // Position adjustment
+              backgroundColor: "transparent", // Set to white during transition and then transparent
+              top: formData.pickupDate || isCalendarOpen ? "-10px" : "50%", // Position adjustment
               left: "10px",
-              transform: formData.pickupDate ? "none" : "translateY(-50%)", // Apply translation for vertical centering
-              fontSize: formData.pickupDate ? "12px" : "16px",
-              color: formData.pickupDate ? "#3f51b5" : "#6c757d", // Color change based on state
+              transform: formData.pickupDate || isCalendarOpen ? "none" : "translateY(-50%)", // Apply translation for vertical centering
+              fontSize: formData.pickupDate || isCalendarOpen ? "12px" : "16px",
+              color: isCalendarOpen ? "#3f51b5" : "#6c757d", // Color change based on state
               transition: "all 0.3s ease", // Smooth transition for all changes
               pointerEvents: "none",
               padding: "0 5px",
@@ -622,13 +630,14 @@ const isDropoffEditable = !initialState.dropoff;
         time_24hr: false, // Use 12-hour format (false for AM/PM, true for 24-hour)
         defaultHour: 12, // Default hour to show in the time picker
         defaultMinute: 0, // Default minute to show in the time picker
+        onOpen: handleCalendarOpen, // Track when the calendar opens
+        onClose: handleCalendarClose, // Track when the calendar closes
       }}
       style={{
         backgroundColor: "#f9f9f9",
-        border: "1px solid #bdbdbd",
+        border: formData.pickupDate || isCalendarOpen ? null : "1px solid #bdbdbd",
         borderRadius: "5px",
         padding: "10px",
-        paddingTop: "18px",
         fontWeight: 400,
         fontSize: "16px",
         height: "45px",
@@ -638,7 +647,22 @@ const isDropoffEditable = !initialState.dropoff;
         boxShadow: "none",
       }}
     />
-  </div>
+    <div className="form-notch" style={{
+      display: "flex",
+      position: "absolute",
+      left: 0,
+      top: 0,
+      width: "100%",
+      maxWidth: "100%",
+      height: "100%",
+      textAlign: "left",
+      pointerEvents: "none",
+    }}>
+      <div className="form-notch-leading"></div>
+      <div className="form-notch-middle" style={{width: "116.8px", borderTop: formData.pickupDate || isCalendarOpen ? "1px solid transparent" : null}}></div>
+      <div className="form-notch-trailing"></div>
+    </div>
+    </div>
 </Form.Group>
 
         </div>
@@ -815,7 +839,7 @@ const isDropoffEditable = !initialState.dropoff;
             }}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3 checkbox_margin_left" controlId="formBasicEmail">
       <MDBCheckbox
         label="Need a Child Seat?"
         name="checkbox"

@@ -39,6 +39,8 @@
     flex-direction: columns !important;
     justify-content: center !important;
     align-items: center !important;
+    width: 61%;
+        margin: 0 auto;
   }
 
   .footer_div1 {
@@ -106,7 +108,8 @@
   }
 
   .footer_copyright {
-    margin-top: 6%;
+    margin-top: 105%;
+    padding-bottom: 10px;
   }
 
   .close-menu {

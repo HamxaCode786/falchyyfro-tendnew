@@ -242,8 +242,8 @@ const Contactusnew = () => {
               ? "Trouvez-nous"
               : "Find Us"}
           </h4>
-          <h5>Plazza Gino Valle, 20149 MI, Italy</h5>
-          <h5>Plazza Gino Valle, 20149 MI, Italy</h5>
+          <h5>CASSANO MAGNAGO (VA) VIA FORO SAN MARTINO 22 CAP 21012</h5>
+          <h5></h5>
         </div>
 
         <div className="first_logo_details">
@@ -261,8 +261,8 @@ const Contactusnew = () => {
               ? "Appelez-nous"
               : "Call Us"}
           </h4>
-          <h5>+1 123-456-7890</h5>
-          <h5>+1 123-456-7890</h5>
+          <h5>(+39) 375 911 9255</h5>
+          <h5></h5>
         </div>
         <div className="first_logo_details">
           <div className="icon-container">
@@ -280,7 +280,7 @@ const Contactusnew = () => {
               : "Mail Us"}
           </h4>
           <h5>contact@falchy.com</h5>
-          <h5>+1 123-456-7890</h5>
+          <h5></h5>
         </div>
       </div>
     </div>

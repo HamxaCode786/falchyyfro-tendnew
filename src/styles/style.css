@@ -22,6 +22,7 @@ body {
 
   padding-right: 0px !important;
 
+
 }
 
 
@@ -560,4 +561,21 @@ background-color: #05021f !important;
 background-color: #3b71ca;
 
 
+}
+
+
+
+
+
+@media (max-width: 768px) {
+  .footer_mobile_responsive {
+    text-align: center !important;
+  }
+
+
+  .checkbox_margin_left {
+
+margin-left: 7px !important;
+
+  }
 }
